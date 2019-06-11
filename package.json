@@ -5,20 +5,50 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
+    "@types/jest": "^24.0.13",
+    "aws-amplify": "^1.1.28",
+    "aws-amplify-react-native": "^2.1.12",
     "expo": "^33.0.0",
+    "jest": "^24.8.0",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
-    "react-native-web": "^0.11.4"
+    "react-native-web": "^0.11.4",
+    "react-redux": "^7.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.19",
     "@types/react-native": "^0.57.60",
     "babel-preset-expo": "^5.1.1",
-    "typescript": "^3.4.5"
+    "react-native-typescript-transformer": "^1.2.12",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.5.1"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.jest.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   },
   "private": true
 }

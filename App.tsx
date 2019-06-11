@@ -1,19 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+
+import amplify from './src/aws-exports';
+
+import Amplify from 'aws-amplify';
+import MyApp from './src/Main';
+
+Amplify.configure(amplify);
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>This is cash me up</Text>
-    </View>
-  );
+  return <MyApp />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});

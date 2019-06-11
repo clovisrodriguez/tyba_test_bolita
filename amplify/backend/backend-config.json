@@ -1,0 +1,8 @@
+{
+	"auth": {
+		"reactnativeclienta50f8301": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

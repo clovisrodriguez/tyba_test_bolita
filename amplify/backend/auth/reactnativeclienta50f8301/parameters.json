@@ -1,0 +1,73 @@
+{
+    "identityPoolName": "reactnativeclienta50f8301_identitypool_a50f8301",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "reactn_a50f8301_lambda_log_policy",
+    "openIdLambdaRoleName": "reactn_a50f8301_openid_lambda_role",
+    "openIdRolePolicy": "reactn_a50f8301_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "reactn_a50f8301_openid_lambda_iam_policy",
+    "openIdLogPolicy": "reactn_a50f8301_openid_lambda_log_policy",
+    "userPoolName": "reactnativeclienta50f8301_userpool_a50f8301",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "reactna50f8301_sns-role",
+    "roleExternalId": "reactna50f8301_role_external_id",
+    "policyName": "reactna50f8301-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email",
+        "name",
+        "phone_number"
+    ],
+    "userpoolClientName": "reactna50f8301_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "reactna50f8301_totp_lambda_role",
+    "mfaLambdaLogPolicy": "reactna50f8301_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "reactna50f8301_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "reactna50f8301_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "reactna50f8301_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "reactna50f8301_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "reactna50f8301_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "reactnativeclienta50f8301",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default",
+    "usernameAttributes": [
+        "phone_number"
+    ]
+}

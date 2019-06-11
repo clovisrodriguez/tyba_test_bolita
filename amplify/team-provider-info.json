@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "reactnativeclient-dev-20190611160853-authRole",
+            "UnauthRoleArn": "arn:aws:iam::036917629170:role/reactnativeclient-dev-20190611160853-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::036917629170:role/reactnativeclient-dev-20190611160853-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "reactnativeclient-dev-20190611160853-deployment",
+            "UnauthRoleName": "reactnativeclient-dev-20190611160853-unauthRole",
+            "StackName": "reactnativeclient-dev-20190611160853",
+            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/reactnativeclient-dev-20190611160853/27866fb0-8c8d-11e9-97af-0a1513ed47e4"
+        },
+        "categories": {
+            "auth": {
+                "reactnativeclienta50f8301": {}
+            }
+        }
+    }
+}
