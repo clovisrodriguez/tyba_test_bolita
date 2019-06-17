@@ -1,10 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppContainer from './routes';
+import { ThemeProvider } from 'react-native-elements';
+import { theme } from './theme/index';
 
-export default function MyApp() {
+const App = () => {
   return (
-    <View>
-      <Text>this is the myapp file</Text>
-    </View>
+    <ThemeProvider theme={theme}>
+      <AppContainer />
+    </ThemeProvider>
   );
-}
+};
+
+export default App;
