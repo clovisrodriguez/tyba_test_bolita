@@ -1,10 +1,21 @@
 {
   "compilerOptions": {
-    "noEmit": true,
-    "lib": ["dom", "esnext"],
-    "jsx": "react-native",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "module": "es2015",
     "moduleResolution": "node",
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  }
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "allowJs": false,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
+  },
+  "types": ["react", "react-native", "jest", "react-redux"],
+  "exclude": ["android", "App.js", "ios", "build", "node_modules"],
+  "compileOnSave": false
 }

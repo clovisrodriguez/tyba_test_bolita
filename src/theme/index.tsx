@@ -1,7 +1,10 @@
+import { colors } from 'react-native-elements';
+
 export const theme = {
   colors: {
     primary: '#88B91E',
-    secondary: '#0F253C'
+    secondary: '#0F253C',
+    whiteBackground: '#EAEAEA'
   },
   button: {
     backgroundColor: '#88B91E',
@@ -28,5 +31,21 @@ export const styles = {
     width: 320,
     marginTop: 13,
     marginBottom: 13
+  },
+  input: {
+    height: 40,
+    width: 319,
+    backgroundColor: '#fff',
+    marginTop: 12,
+    marginBottom: 12,
+    borderBottomWidth: 0,
+    borderColorBottom: theme.colors.whiteBackground,
+    paddingLeft: 45,
+    borderRadius: 20,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 15,
+    fontSize: 14,
+    shadowColor: '#000000',
+    shadowOpacity: 0.1
   }
 };

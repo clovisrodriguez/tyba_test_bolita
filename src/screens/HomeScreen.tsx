@@ -25,15 +25,9 @@ class HomeScreen extends Component<IProps, object> {
 
   render() {
     return (
-      <ImageBackground
-        source={background}
-        style={{ width: '100%', height: '100%' }}
-      >
+      <ImageBackground source={background} style={pageStyles.background}>
         <View style={pageStyles.container}>
-          <Image
-            source={logo}
-            style={{ width: 180, height: 193, marginBottom: '70%' }}
-          />
+          <Image source={logo} style={pageStyles.logo} />
           <Button
             buttonStyle={styles.greenButton}
             title="INGRESAR"
@@ -62,6 +56,15 @@ const pageStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    height: '100%'
+  },
+  logo: {
+    width: 180,
+    height: 193,
+    marginBottom: '20%'
+  },
+  background: {
+    width: '100%',
     height: '100%'
   }
 });
