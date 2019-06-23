@@ -39,7 +39,6 @@ export const styles = {
     marginTop: 12,
     marginBottom: 12,
     borderBottomWidth: 0,
-    borderColorBottom: theme.colors.whiteBackground,
     paddingLeft: 45,
     borderRadius: 20,
     shadowOffset: { width: 0, height: 5 },

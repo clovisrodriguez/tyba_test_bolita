@@ -4,10 +4,24 @@ import { ROUTES } from '../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { Button, Input } from 'react-native-elements';
 import { styles, theme } from '../theme/index';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {
+  enableSubmit,
+  validateUserName,
+  validateEmail,
+  validatePassword,
+  validatePhoneNumber,
+  validateRepeatPassword
+} from '../validators/auth';
+import { formatPhoneNumber } from '../validators/format';
+import {
+  faPoo,
+  faEnvelope,
+  faMobile,
+  faKey
+} from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../assets/logo-white-shadow.png';
-import value from '*.json';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -15,33 +29,86 @@ interface IProps {
 
 interface IState {}
 
+const NAME = 'name';
+const EMAIL = 'email';
+const PASSAWORD = 'password';
+const REPEAT_PASSWORD = 'repeat_password';
+const PHONE_NUMBER = 'phone_number';
+
 class LoginScreen extends Component<IProps, IState> {
   state = {
-    name: '',
-    email: '',
-    password: '',
-    repeat_password: '',
-    phone_number: ''
+    name: null,
+    email: null,
+    password: null,
+    repeat_password: null,
+    phone_number: null,
+    valid_name: true,
+    valid_email: true,
+    valid_password: true,
+    valid_match_passwords: true,
+    valid_phone_number: true
   };
 
   updateText(key, value) {
+    if (key === NAME) {
+      value = value.toLowerCase();
+    }
+
+    if (key === PHONE_NUMBER) {
+      value = formatPhoneNumber(value);
+    }
+
+    this.validators(key, value);
+
     this.setState({
       [key]: value
     });
   }
 
+  validators(key, value) {
+    switch (key) {
+      case NAME:
+        this.setState({
+          valid_name: validateUserName(value)
+        });
+        break;
+      case EMAIL:
+        this.setState({
+          valid_email: validateEmail(value)
+        });
+        break;
+      case PHONE_NUMBER:
+        this.setState({
+          valid_phone_number: validatePhoneNumber(value)
+        });
+        break;
+      case PASSAWORD:
+        this.setState({
+          valid_password: validatePassword(value)
+        });
+        break;
+      case REPEAT_PASSWORD:
+        this.setState({
+          valid_match_passwords: validateRepeatPassword(
+            value,
+            this.state.password
+          )
+        });
+        break;
+    }
+  }
+
   render() {
-    console.log(this.state);
     return (
       <KeyboardAvoidingView behavior="padding" style={pageStyles.container}>
         <Image source={logo} style={pageStyles.logo} />
         <Input
+          textContentType="name"
           leftIcon={
-            <FontAwesome5
-              name="poo"
+            <FontAwesomeIcon
+              icon={faPoo}
               size={20}
               color={theme.colors.primary}
-              solid
             />
           }
           leftIconContainerStyle={{
@@ -53,15 +120,21 @@ class LoginScreen extends Component<IProps, IState> {
           inputStyle={styles.input}
           placeholder="Ingresa tu nombre"
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText('name', value)}
+          onChangeText={value => this.updateText(NAME, value)}
+          errorMessage={
+            this.state.valid_name
+              ? ''
+              : 'Tu primer nombre entre 3 a 10 caracteres, una sola palabra'
+          }
         />
         <Input
+          keyboardType="email-address"
+          textContentType="emailAddress"
           leftIcon={
-            <FontAwesome5
-              name="envelope"
+            <FontAwesomeIcon
+              icon={faEnvelope}
               size={20}
               color={theme.colors.primary}
-              solid
             />
           }
           leftIconContainerStyle={{
@@ -73,15 +146,19 @@ class LoginScreen extends Component<IProps, IState> {
           inputStyle={styles.input}
           placeholder="Ingresa tu correo"
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText('email', value)}
+          onChangeText={value => this.updateText(EMAIL, value)}
+          errorMessage={
+            this.state.valid_email ? '' : 'Ingresa un correo valido'
+          }
         />
         <Input
+          textContentType="telephoneNumber"
+          keyboardType="phone-pad"
           leftIcon={
-            <FontAwesome5
-              name="mobile"
+            <FontAwesomeIcon
+              icon={faMobile}
               size={20}
               color={theme.colors.primary}
-              solid
             />
           }
           leftIconContainerStyle={{
@@ -91,17 +168,25 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
+          value={this.state.phone_number}
           placeholder="Ingresa tu celular"
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText('phone_number', value)}
+          onChangeText={value => this.updateText(PHONE_NUMBER, value)}
+          errorMessage={
+            this.state.valid_phone_number
+              ? ''
+              : 'Ingresa un numero valido, solo celulares en Colombia'
+          }
         />
         <Input
+          keyboardType="default"
+          textContentType="password"
+          secureTextEntry={true}
           leftIcon={
-            <FontAwesome5
-              name="key"
+            <FontAwesomeIcon
+              icon={faKey}
               size={20}
               color={theme.colors.primary}
-              solid
             />
           }
           leftIconContainerStyle={{
@@ -113,15 +198,22 @@ class LoginScreen extends Component<IProps, IState> {
           inputStyle={styles.input}
           placeholder="Elige una clave"
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText('password', value)}
+          onChangeText={value => this.updateText(PASSAWORD, value)}
+          errorMessage={
+            this.state.valid_password
+              ? ''
+              : 'Tu clave debe contener 8 carácteres, una Mayúscula y un Número'
+          }
         />
         <Input
+          keyboardType="default"
+          textContentType="password"
+          secureTextEntry={true}
           leftIcon={
-            <FontAwesome5
-              name="key"
+            <FontAwesomeIcon
+              icon={faKey}
               size={20}
               color={theme.colors.primary}
-              solid
             />
           }
           leftIconContainerStyle={{
@@ -133,7 +225,12 @@ class LoginScreen extends Component<IProps, IState> {
           inputStyle={styles.input}
           placeholder="Repite tu clave"
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText('repeat_password', value)}
+          onChangeText={value => this.updateText(REPEAT_PASSWORD, value)}
+          errorMessage={
+            this.state.valid_match_passwords
+              ? ''
+              : 'Las contraseñas deben coincidir'
+          }
         />
         <Button
           buttonStyle={styles.greenButton}
@@ -142,6 +239,7 @@ class LoginScreen extends Component<IProps, IState> {
           onPress={() => {
             this.props.navigation.navigate(ROUTES.HomeScreen);
           }}
+          disabled={enableSubmit(this.state)}
         />
         <Text
           onPress={() => {
