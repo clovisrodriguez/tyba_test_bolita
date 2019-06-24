@@ -6731,10 +6731,22 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-animated-loader@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-animated-loader/-/react-native-animated-loader-0.0.7.tgz#a5b8a4fc38ecae418693dc1bd9ffaac9528b82c6"
+  integrity sha512-s0CK5wKvQzZDYFKrKx2fz3bYmcr0PSdAzfrvSSPTyrvzYfmSW1bfN5cRkR8ouBXDRDnqRSfZYKQElCKhiBLbaQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-branch@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
+
+react-native-confirmation-code-field@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-3.6.0.tgz#0fac41feef6dce2a3e781cf7935dd2972f161725"
+  integrity sha512-nRtzFtdlo8IWjnxnepg9bSUlZZmAE2xr8f7cyGMusW2QRVOEy8AHN7CrHSzqE/qSMB3c4YUg6UOrxmrfHJHYTw==
 
 react-native-elements@^0.19.1:
   version "0.19.1"
@@ -6813,6 +6825,13 @@ react-native-screens@1.0.0-alpha.22, "react-native-screens@^1.0.0 || ^1.0.0-alph
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
+
+react-native-snackbar-component@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar-component/-/react-native-snackbar-component-1.1.0.tgz#51be4ab92e004d20010a1a8de0e269c0a3feaa5d"
+  integrity sha512-fV6X6ejVqQhqvrtAGsxn2cMKskbv5s0ZkcMfW2wiUa+Zaobk/otds+vEwRDQivfk1RST4UfCqDJtMbnMwYAS0w==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-status-bar-height@^2.2.0:
   version "2.3.1"

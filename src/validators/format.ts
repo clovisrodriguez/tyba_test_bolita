@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const formatPhoneNumber = phone => {
   if (!phone.includes('+57')) {
     const cleaned = `${phone.replace(/\D/g, '')}`;

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, KeyboardAvoidingView, Text } from 'react-native';
-import { ROUTES } from '../routes';
+import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { Button, Input } from 'react-native-elements';
-import { styles, theme } from '../theme/index';
+import { styles, theme } from '../../theme/index';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   enableSubmit,
@@ -12,16 +12,22 @@ import {
   validatePassword,
   validatePhoneNumber,
   validateRepeatPassword
-} from '../validators/auth';
-import { formatPhoneNumber } from '../validators/format';
+} from '../../validators/auth';
+import { formatPhoneNumber } from '../../validators/format';
 import {
   faPoo,
   faEnvelope,
   faMobile,
   faKey
 } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../../assets/logo-white-shadow.png';
+import Amplify, { Auth } from 'aws-amplify';
+import AWSconfig from '../../aws-exports';
+import AnimatedLoader from 'react-native-animated-loader';
+import Snackbar from 'react-native-snackbar-component';
+import updateUser from '../../store/actions/storeUser';
 
-import logo from '../../assets/logo-white-shadow.png';
+Amplify.configure(AWSconfig);
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -46,7 +52,10 @@ class LoginScreen extends Component<IProps, IState> {
     valid_email: true,
     valid_password: true,
     valid_match_passwords: true,
-    valid_phone_number: true
+    valid_phone_number: true,
+    loading: false,
+    snackIsVisible: false,
+    errorMessage: ''
   };
 
   updateText(key, value) {
@@ -98,9 +107,54 @@ class LoginScreen extends Component<IProps, IState> {
     }
   }
 
+  signUp() {
+    this.setState({
+      loading: true
+    });
+    const { email, name, password, phone_number } = this.state;
+    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
+    Auth.signUp({
+      username: phoneNumber,
+      password: password,
+      attributes: {
+        email: email,
+        name: name
+      }
+    })
+      .then(() => {
+        const user = {
+          username: phoneNumber,
+          name: name,
+          email: email
+        };
+        updateUser(user);
+        this.setState({ loading: false });
+        this.props.navigation.navigate(ROUTES.ConfirmationScreen);
+      })
+      .catch(err => {
+        console.log('error sign!:', err);
+        this.setState({
+          loading: false,
+          errorMessage: err.message,
+          snackIsVisible: true
+        });
+      });
+  }
+
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={pageStyles.container}>
+        <AnimatedLoader
+          visible={this.state.loading}
+          overlayColor="rgba(255,255,255,0.75)"
+          animationStyle={styles.lottie}
+          speed={1}
+        />
+        <Snackbar
+          visible={this.state.snackIsVisible}
+          textMessage={this.state.errorMessage}
+          onPressed={() => this.setState({ snackIsVisible: false })}
+        />
         <Image source={logo} style={pageStyles.logo} />
         <Input
           textContentType="name"
@@ -236,9 +290,7 @@ class LoginScreen extends Component<IProps, IState> {
           buttonStyle={styles.greenButton}
           title="UNIRTE"
           titleStyle={{ color: '#fff', fontWeight: 'bold' }}
-          onPress={() => {
-            this.props.navigation.navigate(ROUTES.HomeScreen);
-          }}
+          onPress={this.signUp.bind(this)}
           disabled={enableSubmit(this.state)}
         />
         <Text

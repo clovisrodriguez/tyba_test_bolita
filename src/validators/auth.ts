@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const validateUserName = name => {
   const regex = /^[a-z]{3,10}$/;
   return regex.test(name);

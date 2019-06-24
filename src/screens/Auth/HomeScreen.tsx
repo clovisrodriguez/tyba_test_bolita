@@ -7,11 +7,11 @@ import {
   ImageBackground
 } from 'react-native';
 import { Button, Image } from 'react-native-elements';
-import { ROUTES } from '../routes';
+import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
-import { styles, theme } from '../theme/index';
-import background from '../../assets/background.jpg';
-import logo from '../../assets/logo-blanco.png';
+import { styles, theme } from '../../theme/index';
+import background from '../../../assets/background.jpg';
+import logo from '../../../assets/logo-blanco.png';
 
 export interface IProps {
   navigation: NavigationScreenProp<any, any>;

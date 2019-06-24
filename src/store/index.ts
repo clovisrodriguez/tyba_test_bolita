@@ -1,10 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import logger from 'redux-logger';
-import { reducer as formReducer } from 'redux-form';
+import storeUserReducer from './reducers/storeUser';
 
 const store: any = createStore(
   combineReducers({
-    singUpForm: formReducer
+    user: storeUserReducer
   }),
   applyMiddleware(logger)
 );

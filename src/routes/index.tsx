@@ -1,12 +1,16 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';
-import SignupScreen from '../screens/SignupScreen';
+import HomeScreen from '../screens/Auth/HomeScreen';
+import LoginScreen from '../screens/Auth/LoginScreen';
+import SignupScreen from '../screens/Auth/SignupScreen';
+import ConfirmationScreen from '../screens/Auth/ConfirmationScreen';
+import Dashboard from '../screens/Dashboard';
 
 export enum ROUTES {
   HomeScreen = 'HomeScreen',
   LoginScreen = 'LoginScreen',
-  SignupScreen = 'SignupScreen'
+  SignupScreen = 'SignupScreen',
+  ConfirmationScreen = 'ConfirmationScreen',
+  Dashboard = 'Dashboard'
 }
 
 const ScreenStack = createStackNavigator({
@@ -28,6 +32,20 @@ const ScreenStack = createStackNavigator({
     screen: SignupScreen,
     navigationOptions: {
       title: [ROUTES.SignupScreen],
+      header: null
+    }
+  },
+  [ROUTES.ConfirmationScreen]: {
+    screen: ConfirmationScreen,
+    navigationOptions: {
+      title: [ROUTES.ConfirmationScreen],
+      header: null
+    }
+  },
+  [ROUTES.Dashboard]: {
+    screen: Dashboard,
+    navigationOptions: {
+      title: [ROUTES.Dashboard],
       header: null
     }
   }

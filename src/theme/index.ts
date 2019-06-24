@@ -1,5 +1,3 @@
-import { colors } from 'react-native-elements';
-
 export const theme = {
   colors: {
     primary: '#88B91E',
@@ -46,5 +44,9 @@ export const styles = {
     fontSize: 14,
     shadowColor: '#000000',
     shadowOpacity: 0.1
+  },
+  lottie: {
+    width: 100,
+    height: 100
   }
 };
