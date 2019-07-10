@@ -8,12 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { formatPhoneNumber } from '../../validators/format';
 import { faMobile, faKey } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/logo-white-shadow.png';
-import Amplify, { Auth } from 'aws-amplify';
-import AWSconfig from '../../aws-exports';
+import { Auth } from 'aws-amplify';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
-
-Amplify.configure(AWSconfig);
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;

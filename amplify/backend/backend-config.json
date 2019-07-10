@@ -1,8 +1,17 @@
 {
 	"auth": {
-		"reactnativeclienta50f8301": {
+		"userapp8971b3ce": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
+		}
+	},
+	"api": {
+		"cmugraph": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "AMAZON_COGNITO_USER_POOLS"
+			}
 		}
 	}
 }

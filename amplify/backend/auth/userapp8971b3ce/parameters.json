@@ -1,12 +1,12 @@
 {
-    "identityPoolName": "reactnativeclienta50f8301_identitypool_a50f8301",
+    "identityPoolName": "userapp8971b3ce_identitypool_8971b3ce",
     "allowUnauthenticatedIdentities": false,
-    "lambdaLogPolicy": "reactn_a50f8301_lambda_log_policy",
-    "openIdLambdaRoleName": "reactn_a50f8301_openid_lambda_role",
-    "openIdRolePolicy": "reactn_a50f8301_openid_pass_role_policy",
-    "openIdLambdaIAMPolicy": "reactn_a50f8301_openid_lambda_iam_policy",
-    "openIdLogPolicy": "reactn_a50f8301_openid_lambda_log_policy",
-    "userPoolName": "reactnativeclienta50f8301_userpool_a50f8301",
+    "lambdaLogPolicy": "userap_8971b3ce_lambda_log_policy",
+    "openIdLambdaRoleName": "userap_8971b3ce_openid_lambda_role",
+    "openIdRolePolicy": "userap_8971b3ce_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "userap_8971b3ce_openid_lambda_iam_policy",
+    "openIdLogPolicy": "userap_8971b3ce_openid_lambda_log_policy",
+    "userPoolName": "userapp8971b3ce_userpool_8971b3ce",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -14,9 +14,9 @@
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "roleName": "reactna50f8301_sns-role",
-    "roleExternalId": "reactna50f8301_role_external_id",
-    "policyName": "reactna50f8301-sns-policy",
+    "roleName": "userap8971b3ce_sns-role",
+    "roleExternalId": "userap8971b3ce_role_external_id",
+    "policyName": "userap8971b3ce-sns-policy",
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
@@ -25,11 +25,9 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email",
-        "name",
-        "phone_number"
+        "email"
     ],
-    "userpoolClientName": "reactna50f8301_app_client",
+    "userpoolClientName": "userap8971b3ce_app_client",
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
@@ -38,15 +36,15 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "mfaLambdaRole": "reactna50f8301_totp_lambda_role",
-    "mfaLambdaLogPolicy": "reactna50f8301_totp_lambda_log_policy",
-    "mfaPassRolePolicy": "reactna50f8301_totp_pass_role_policy",
-    "mfaLambdaIAMPolicy": "reactna50f8301_totp_lambda_iam_policy",
-    "userpoolClientLambdaRole": "reactna50f8301_userpoolclient_lambda_role",
-    "userpoolClientLogPolicy": "reactna50f8301_userpoolclient_lambda_log_policy",
-    "userpoolClientLambdaPolicy": "reactna50f8301_userpoolclient_lambda_iam_policy",
+    "mfaLambdaRole": "userap8971b3ce_totp_lambda_role",
+    "mfaLambdaLogPolicy": "userap8971b3ce_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "userap8971b3ce_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "userap8971b3ce_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "userap8971b3ce_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "userap8971b3ce_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "userap8971b3ce_userpoolclient_lambda_iam_policy",
     "userpoolClientSetAttributes": false,
-    "resourceName": "reactnativeclienta50f8301",
+    "resourceName": "userapp8971b3ce",
     "authSelections": "identityPoolAndUserPool",
     "authRoleName": {
         "Ref": "AuthRoleName"

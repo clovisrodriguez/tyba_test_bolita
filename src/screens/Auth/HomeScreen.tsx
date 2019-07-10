@@ -12,6 +12,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
 import background from '../../../assets/background.jpg';
 import logo from '../../../assets/logo-blanco.png';
+import { Auth } from 'aws-amplify';
 
 export interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -19,6 +20,17 @@ export interface IProps {
 }
 
 class HomeScreen extends Component<IProps, object> {
+  constructor(props) {
+    super(props);
+    this._authUser();
+  }
+
+  _authUser = async () => {
+    await Auth.currentSession().then(() =>
+      this.props.navigation.navigate(ROUTES.Dashboard)
+    );
+  };
+
   static navigationOptions = {
     title: 'This is home'
   };

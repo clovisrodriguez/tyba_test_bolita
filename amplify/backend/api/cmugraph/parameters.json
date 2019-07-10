@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "cmugraph",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authuserapp8971b3ce",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

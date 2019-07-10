@@ -1,4 +1,8 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import {
+  createAppContainer,
+  createStackNavigator,
+  createSwitchNavigator
+} from 'react-navigation';
 import HomeScreen from '../screens/Auth/HomeScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import SignupScreen from '../screens/Auth/SignupScreen';
@@ -13,7 +17,7 @@ export enum ROUTES {
   Dashboard = 'Dashboard'
 }
 
-const ScreenStack = createStackNavigator({
+const AuthStack = createStackNavigator({
   [ROUTES.HomeScreen]: {
     screen: HomeScreen,
     navigationOptions: {
@@ -41,7 +45,10 @@ const ScreenStack = createStackNavigator({
       title: [ROUTES.ConfirmationScreen],
       header: null
     }
-  },
+  }
+});
+
+const AppStack = createStackNavigator({
   [ROUTES.Dashboard]: {
     screen: Dashboard,
     navigationOptions: {
@@ -51,6 +58,16 @@ const ScreenStack = createStackNavigator({
   }
 });
 
-const AppContainer = createAppContainer(ScreenStack);
+const AppContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      Auth: AuthStack,
+      App: AppStack
+    },
+    {
+      initialRouteName: 'Auth'
+    }
+  )
+);
 
 export default AppContainer;

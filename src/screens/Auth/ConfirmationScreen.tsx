@@ -4,18 +4,17 @@ import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
 import logo from '../../../assets/logo-white-shadow.png';
-import Amplify, { Auth } from 'aws-amplify';
-import AWSconfig from '../../aws-exports';
+import { Auth } from 'aws-amplify';
 import CodeInput from 'react-native-confirmation-code-field';
 import { connect } from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
-
-Amplify.configure(AWSconfig);
+import { createUser } from '../../client/index';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
   user: any;
+  password: String;
 }
 
 interface IState {}
@@ -30,12 +29,34 @@ class ConfirmationScreen extends Component<IProps, IState> {
 
   handlerOnFulfill(code) {
     this.setState({ loading: true });
-    Auth.confirmSignUp(this.props.user.username, code)
-      .then(() => {
-        this.setState({ loading: false });
-        this.props.navigation.navigate(ROUTES.Dashboard);
+
+    const { user, navigation } = this.props;
+    const password = navigation.getParam('password', 'no-password');
+
+    Auth.confirmSignUp(user.phone_number, code)
+      .then(res => {
+        console.log(res);
+        Auth.signIn(user.phone_number, password)
+          .then(() => {
+            console.log('sign succesfully');
+            createUser(user)
+              .then(res => {
+                this.setState({ loading: false });
+                console.log('User succesfully created:', res);
+                this.props.navigation.navigate(ROUTES.Dashboard);
+              })
+              .catch(err => {
+                console.log('Something went wrong creating user :', err);
+                this.setState({ loading: false });
+              });
+          })
+          .catch(err => {
+            this.setState({ loading: false });
+            console.log('error sign!:', err);
+          });
       })
       .catch(err => {
+        console.log(err);
         this.setState({ loading: false, errorMessage: err.message });
       });
   }
@@ -56,7 +77,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
         />
         <Image source={logo} style={pageStyles.logo} />
         <Text style={{ marginBottom: '10%', fontStyle: 'italic' }}>
-          Ingresa el código de confirmación, enviado a tu correo
+          Ingresa el código de confirmación, enviado a tu celular
         </Text>
         <CodeInput
           onFulfill={this.handlerOnFulfill.bind(this)}

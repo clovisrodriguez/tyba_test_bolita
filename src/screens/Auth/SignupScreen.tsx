@@ -21,13 +21,11 @@ import {
   faKey
 } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/logo-white-shadow.png';
-import Amplify, { Auth } from 'aws-amplify';
-import AWSconfig from '../../aws-exports';
+import { Auth } from 'aws-amplify';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import updateUser from '../../store/actions/storeUser';
-
-Amplify.configure(AWSconfig);
+import { CreateUserInput, User_type } from '../../API';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -122,14 +120,16 @@ class LoginScreen extends Component<IProps, IState> {
       }
     })
       .then(() => {
-        const user = {
-          username: phoneNumber,
-          name: name,
-          email: email
+        const user: CreateUserInput = {
+          type: User_type.REGULAR_USER,
+          nickname: name,
+          phone_number: phoneNumber,
+          email: email,
+          cmus: 0
         };
         updateUser(user);
         this.setState({ loading: false });
-        this.props.navigation.navigate(ROUTES.ConfirmationScreen);
+        this.props.navigation.navigate(ROUTES.ConfirmationScreen, { password });
       })
       .catch(err => {
         console.log('error sign!:', err);
