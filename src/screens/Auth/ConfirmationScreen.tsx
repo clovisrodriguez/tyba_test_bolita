@@ -30,15 +30,16 @@ class ConfirmationScreen extends Component<IProps, IState> {
   handlerOnFulfill(code) {
     this.setState({ loading: true });
 
-    const { user, navigation } = this.props;
+    let { user, navigation } = this.props;
     const password = navigation.getParam('password', 'no-password');
 
     Auth.confirmSignUp(user.phone_number, code)
       .then(res => {
         console.log(res);
         Auth.signIn(user.phone_number, password)
-          .then(() => {
+          .then(authUser => {
             console.log('sign succesfully');
+            user.id = authUser.signInUserSession.accessToken.payload.username;
             createUser(user)
               .then(res => {
                 this.setState({ loading: false });

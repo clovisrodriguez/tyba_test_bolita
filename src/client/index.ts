@@ -8,3 +8,6 @@ export const createUser = async (user: CreateUserInput) =>
 
 export const getAllUser = async () =>
   await API.graphql(graphqlOperation(queries.listUsers));
+
+export const getUser = async (id: String) =>
+  await API.graphql(graphqlOperation(queries.getUser, { id }));

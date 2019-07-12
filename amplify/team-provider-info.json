@@ -1,36 +1,19 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "userapp-dev-20190708180517-authRole",
-            "UnauthRoleArn": "arn:aws:iam::036917629170:role/userapp-dev-20190708180517-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::036917629170:role/userapp-dev-20190708180517-authRole",
-            "Region": "us-east-2",
-            "DeploymentBucketName": "userapp-dev-20190708180517-deployment",
-            "UnauthRoleName": "userapp-dev-20190708180517-unauthRole",
-            "StackName": "userapp-dev-20190708180517",
-            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/userapp-dev-20190708180517/e313dfe0-a1d4-11e9-a352-0aa0cd9d9f9c"
-        },
-        "categories": {
-            "auth": {
-                "userapp8971b3ce": {}
-            }
-        }
-    },
-    "develop": {
-        "awscloudformation": {
-            "AuthRoleName": "userapp-develop-20190709175652-authRole",
-            "UnauthRoleArn": "arn:aws:iam::036917629170:role/userapp-develop-20190709175652-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::036917629170:role/userapp-develop-20190709175652-authRole",
-            "Region": "us-east-2",
-            "DeploymentBucketName": "userapp-develop-20190709175652-deployment",
-            "UnauthRoleName": "userapp-develop-20190709175652-unauthRole",
-            "StackName": "userapp-develop-20190709175652",
-            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/userapp-develop-20190709175652/e08ff740-a29c-11e9-9fa8-025c218c397c"
-        },
-        "categories": {
-            "auth": {
-                "userapp8971b3ce": {}
-            }
-        }
-    }
+	"develop": {
+		"awscloudformation": {
+			"AuthRoleName": "userapp-develop-20190709175652-authRole",
+			"UnauthRoleArn": "arn:aws:iam::036917629170:role/userapp-develop-20190709175652-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::036917629170:role/userapp-develop-20190709175652-authRole",
+			"Region": "us-east-2",
+			"DeploymentBucketName": "userapp-develop-20190709175652-deployment",
+			"UnauthRoleName": "userapp-develop-20190709175652-unauthRole",
+			"StackName": "userapp-develop-20190709175652",
+			"StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/userapp-develop-20190709175652/e08ff740-a29c-11e9-9fa8-025c218c397c"
+		},
+		"categories": {
+			"auth": {
+				"userapp8971b3ce": {}
+			}
+		}
+	}
 }

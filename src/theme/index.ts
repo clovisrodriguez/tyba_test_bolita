@@ -2,7 +2,9 @@ export const theme = {
   colors: {
     primary: '#88B91E',
     secondary: '#0F253C',
-    whiteBackground: '#EAEAEA'
+    white: '#FFF',
+    whiteBackground: '#EAEAEA',
+    darkBackground: ['#0F253C', '#010305']
   },
   button: {
     backgroundColor: '#88B91E',
@@ -14,7 +16,15 @@ export const theme = {
   }
 };
 
-export const styles = {
+export const styles: any = {
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    height: '100%',
+    width: '100%'
+  },
   greenButton: {
     borderRadius: 23,
     height: 56,
@@ -29,6 +39,15 @@ export const styles = {
     width: 320,
     marginTop: 13,
     marginBottom: 13
+  },
+  innerPage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1
   },
   input: {
     height: 40,

@@ -121,6 +121,7 @@ class LoginScreen extends Component<IProps, IState> {
     })
       .then(() => {
         const user: CreateUserInput = {
+          id: null,
           type: User_type.REGULAR_USER,
           nickname: name,
           phone_number: phoneNumber,
