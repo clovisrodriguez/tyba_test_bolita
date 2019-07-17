@@ -1,20 +1,29 @@
+import React from 'react';
+import NavigationComponent from '../components/Navigation';
 import {
   createAppContainer,
   createStackNavigator,
-  createSwitchNavigator
+  createSwitchNavigator,
+  createBottomTabNavigator
 } from 'react-navigation';
 import HomeScreen from '../screens/Auth/HomeScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import SignupScreen from '../screens/Auth/SignupScreen';
 import ConfirmationScreen from '../screens/Auth/ConfirmationScreen';
 import Dashboard from '../screens/Dashboard';
+import QRScreen from '../screens/Transactions/QRScreen';
+import TransactionsScreen from '../screens/Transactions/TransactionsScreen';
+import ConfirmationTransactionScreen from '../screens/Transactions/ConfirmationScreen';
 
 export enum ROUTES {
   HomeScreen = 'HomeScreen',
   LoginScreen = 'LoginScreen',
   SignupScreen = 'SignupScreen',
   ConfirmationScreen = 'ConfirmationScreen',
-  Dashboard = 'Dashboard'
+  Dashboard = 'Dashboard',
+  QRScreen = 'QRScreen',
+  TransactionsScreen = 'TransactionsScreen',
+  ConfirmationTransactionScreen = 'ConfirmationTransactionScreen'
 }
 
 const AuthStack = createStackNavigator({
@@ -48,12 +57,48 @@ const AuthStack = createStackNavigator({
   }
 });
 
-const AppStack = createStackNavigator({
+const AppStack = createBottomTabNavigator({
   [ROUTES.Dashboard]: {
     screen: Dashboard,
     navigationOptions: {
       title: [ROUTES.Dashboard],
-      header: null
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
+    }
+  }
+});
+
+const TransactionsStack = createBottomTabNavigator({
+  [ROUTES.QRScreen]: {
+    screen: QRScreen,
+    navigationOptions: {
+      title: [ROUTES.QRScreen],
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
+    }
+  },
+  [ROUTES.TransactionsScreen]: {
+    screen: TransactionsScreen,
+    navigationOptions: {
+      title: [ROUTES.TransactionsScreen],
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
+    }
+  },
+  [ROUTES.ConfirmationTransactionScreen]: {
+    screen: ConfirmationTransactionScreen,
+    navigationOptions: {
+      title: [ROUTES.ConfirmationTransactionScreen],
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
     }
   }
 });
@@ -62,7 +107,8 @@ const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       Auth: AuthStack,
-      App: AppStack
+      App: AppStack,
+      Transactions: TransactionsStack
     },
     {
       initialRouteName: 'Auth'

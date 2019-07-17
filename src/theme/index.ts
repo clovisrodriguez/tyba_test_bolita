@@ -2,6 +2,7 @@ export const theme = {
   colors: {
     primary: '#88B91E',
     secondary: '#0F253C',
+    grey: '#adadad',
     white: '#FFF',
     whiteBackground: '#EAEAEA',
     darkBackground: ['#0F253C', '#010305']
@@ -17,8 +18,16 @@ export const theme = {
 };
 
 export const styles: any = {
+  answer: {
+    color: theme.colors.white,
+    fontStyle: 'italic',
+    fontSize: 18,
+    marginTop: 2,
+    marginBottom: 8,
+    textAlign: 'center'
+  },
   background: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -47,7 +56,8 @@ export const styles: any = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1
+    zIndex: 1,
+    elevation: 3
   },
   input: {
     height: 40,
@@ -63,6 +73,14 @@ export const styles: any = {
     fontSize: 14,
     shadowColor: '#000000',
     shadowOpacity: 0.1
+  },
+  label: {
+    color: theme.colors.white,
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 12,
+    marginBottom: 12
   },
   lottie: {
     width: 100,

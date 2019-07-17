@@ -1,7 +1,6 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint-react"],
-  "jsRules": {},
   "rules": {
     "member-access": false,
     "ordered-imports": false,
@@ -11,6 +10,11 @@
     "jsx-no-lambda": false
   },
   "rulesDirectory": [],
+  "jsRules": {
+    "max-line-lenght": {
+      "options": [120]
+    }
+  },
   "linterOptions": {
     "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
   }

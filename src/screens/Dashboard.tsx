@@ -20,7 +20,7 @@ interface IProps {
   user: CreateUserInput;
 }
 
-interface IState {}
+interface IState { }
 
 const Rectangle = props => {
   const { w, h, t } = props;
@@ -74,7 +74,7 @@ class Dashboard extends Component<IProps, IState> {
         />
         <View style={styles.innerPage}>
           <BlurView style={pageStyles.balance} tint="default" intesity={40}>
-            <Text style={pageStyles.cmu_number}>{user.cmus}!</Text>
+            <Text style={pageStyles.cmu_number}>{user.cmus}</Text>
             <Text
               style={{
                 color: theme.colors.white,
@@ -88,7 +88,11 @@ class Dashboard extends Component<IProps, IState> {
             title="COMPRAR CMUS"
             buttonStyle={styles.greenButtonOutline}
             type="outline"
-            onPress={() => WebBrowser.openBrowserAsync('http://cmu.payment.checkout.s3-website.us-east-2.amazonaws.com')}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                'http://cmu.payment.checkout.s3-website.us-east-2.amazonaws.com'
+              )
+            }
           />
           <Button
             buttonStyle={styles.greenButton}
@@ -96,7 +100,10 @@ class Dashboard extends Component<IProps, IState> {
             titleStyle={{ color: theme.colors.secondary }}
             onPress={() =>
               Auth.signOut({ global: true })
-                .then(() => this.props.navigation.navigate(ROUTES.HomeScreen))
+                .then(() => {
+                  updateUser({});
+                  this.props.navigation.navigate(ROUTES.HomeScreen);
+                })
                 .catch(err => console.log(err))
             }
           />

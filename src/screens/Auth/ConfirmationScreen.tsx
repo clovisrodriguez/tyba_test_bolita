@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import { createUser } from '../../client/index';
+import { Button } from 'react-native-elements';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -17,7 +18,7 @@ interface IProps {
   password: String;
 }
 
-interface IState {}
+interface IState { }
 
 class ConfirmationScreen extends Component<IProps, IState> {
   state = {
@@ -27,11 +28,18 @@ class ConfirmationScreen extends Component<IProps, IState> {
     errorMessage: ''
   };
 
+  resendConfirmationCode() {
+    console.log('this run');
+    Auth.resendSignUp(this.props.user.phone_number)
+      .then(res => console.log('resend confirmation', res));
+  }
+
   handlerOnFulfill(code) {
     this.setState({ loading: true });
 
     let { user, navigation } = this.props;
     const password = navigation.getParam('password', 'no-password');
+
 
     Auth.confirmSignUp(user.phone_number, code)
       .then(res => {
@@ -87,6 +95,12 @@ class ConfirmationScreen extends Component<IProps, IState> {
           activeColor={theme.colors.primary}
           space={16}
           variant="border-circle"
+        />
+        <Button
+          buttonStyle={styles.greenButton}
+          title="ENVIAR NUEVAMENTE EL CÓDIGO"
+          titleStyle={{ color: theme.colors.secondary }}
+          onPress={() => this.resendConfirmationCode}
         />
         <Text
           onPress={() => {
