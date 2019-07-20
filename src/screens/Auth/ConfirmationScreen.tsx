@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, View, Text, Keyboard } from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
@@ -11,6 +11,10 @@ import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import { createUser } from '../../client/index';
 import { Button } from 'react-native-elements';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -18,7 +22,7 @@ interface IProps {
   password: String;
 }
 
-interface IState { }
+interface IState {}
 
 class ConfirmationScreen extends Component<IProps, IState> {
   state = {
@@ -30,16 +34,17 @@ class ConfirmationScreen extends Component<IProps, IState> {
 
   resendConfirmationCode() {
     console.log('this run');
-    Auth.resendSignUp(this.props.user.phone_number)
-      .then(res => console.log('resend confirmation', res));
+    Auth.resendSignUp(this.props.user.phone_number).then(res =>
+      console.log('resend confirmation', res)
+    );
   }
 
   handlerOnFulfill(code) {
+    Keyboard.dismiss();
     this.setState({ loading: true });
 
     let { user, navigation } = this.props;
     const password = navigation.getParam('password', 'no-password');
-
 
     Auth.confirmSignUp(user.phone_number, code)
       .then(res => {
@@ -75,7 +80,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
       <View style={pageStyles.container}>
         <AnimatedLoader
           visible={this.state.loading}
-          overlayColor="rgba(255,255,255,0.75)"
+          overlayColor='rgba(255,255,255,0.75)'
           animationStyle={styles.lottie}
           speed={1}
         />
@@ -85,7 +90,12 @@ class ConfirmationScreen extends Component<IProps, IState> {
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
         <Image source={logo} style={pageStyles.logo} />
-        <Text style={{ marginBottom: '10%', fontStyle: 'italic' }}>
+        <Text
+          style={{
+            marginBottom: hp('5%'),
+            fontStyle: 'italic',
+            textAlign: 'center'
+          }}>
           Ingresa el código de confirmación, enviado a tu celular
         </Text>
         <CodeInput
@@ -94,21 +104,15 @@ class ConfirmationScreen extends Component<IProps, IState> {
           codeLength={6}
           activeColor={theme.colors.primary}
           space={16}
-          variant="border-circle"
+          variant='border-circle'
         />
         <Button
+          style={{ marginBottom: hp('35%') }}
           buttonStyle={styles.greenButton}
-          title="ENVIAR NUEVAMENTE EL CÓDIGO"
+          title='ENVIAR NUEVAMENTE'
           titleStyle={{ color: theme.colors.secondary }}
           onPress={() => this.resendConfirmationCode}
         />
-        <Text
-          onPress={() => {
-            this.props.navigation.navigate(ROUTES.HomeScreen);
-          }}
-        >
-          Volver
-        </Text>
       </View>
     );
   }
@@ -120,13 +124,13 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.whiteBackground,
-    padding: 20
+    padding: wp('5%')
   },
   logo: {
     width: 104,
     height: 112,
-    marginTop: '10%',
-    marginBottom: '10%'
+    marginTop: hp('5%'),
+    marginBottom: hp('7%')
   }
 });
 

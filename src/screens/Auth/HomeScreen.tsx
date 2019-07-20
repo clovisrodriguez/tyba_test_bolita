@@ -13,6 +13,7 @@ import { styles, theme } from '../../theme/index';
 import background from '../../../assets/background.jpg';
 import logo from '../../../assets/logo-blanco.png';
 import { Auth } from 'aws-amplify';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -42,16 +43,16 @@ class HomeScreen extends Component<IProps, object> {
           <Image source={logo} style={pageStyles.logo} />
           <Button
             buttonStyle={styles.greenButton}
-            title="INGRESAR"
+            title='INGRESAR'
             titleStyle={{ color: theme.colors.secondary }}
             onPress={() => {
               this.props.navigation.navigate(ROUTES.LoginScreen);
             }}
           />
           <Button
-            title="REGISTRARSE"
+            title='REGISTRARSE'
             buttonStyle={styles.greenButtonOutline}
-            type="outline"
+            type='outline'
             onPress={() => {
               this.props.navigation.navigate(ROUTES.SignupScreen);
             }}
@@ -67,17 +68,16 @@ const pageStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    height: '100%'
+    padding: 20
   },
   logo: {
     width: 180,
     height: 193,
-    marginBottom: '20%'
+    marginBottom: hp('20%')
   },
   background: {
-    width: '100%',
-    height: '100%'
+    height: '100%',
+    width: '100%'
   }
 });
 

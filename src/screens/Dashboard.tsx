@@ -13,6 +13,10 @@ import updateUser from '../store/actions/storeUser';
 import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
 import * as WebBrowser from 'expo-web-browser';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -20,7 +24,7 @@ interface IProps {
   user: CreateUserInput;
 }
 
-interface IState { }
+interface IState {}
 
 const Rectangle = props => {
   const { w, h, t } = props;
@@ -30,7 +34,7 @@ const Rectangle = props => {
       style={{
         position: 'absolute',
         width: w,
-        height: h * 1.5,
+        height: h,
         zIndex: 0,
         top: t,
         right: 0,
@@ -64,30 +68,30 @@ class Dashboard extends Component<IProps, IState> {
     return (
       <LinearGradient
         colors={theme.colors.darkBackground}
-        style={styles.background}
-      >
+        style={styles.background}>
         <AnimatedLoader
           visible={loading}
-          overlayColor="rgba(164,220,34,0.75)"
+          overlayColor='rgba(164,220,34,0.75)'
           animationStyle={styles.lottie}
           speed={1}
         />
         <View style={styles.innerPage}>
-          <BlurView style={pageStyles.balance} tint="default" intesity={40}>
+          <BlurView style={pageStyles.balance} tint='default' intesity={40}>
             <Text style={pageStyles.cmu_number}>{user.cmus}</Text>
             <Text
               style={{
                 color: theme.colors.white,
-                textAlign: 'center'
-              }}
-            >
+                textAlign: 'center',
+                fontSize: wp('3%'),
+                paddingTop: wp('1%')
+              }}>
               ¡Hola {user.nickname}! Este es tu saldo disponible
             </Text>
           </BlurView>
           <Button
-            title="COMPRAR CMUS"
+            title='COMPRAR CMUS'
             buttonStyle={styles.greenButtonOutline}
-            type="outline"
+            type='outline'
             onPress={() =>
               WebBrowser.openBrowserAsync(
                 'http://cmu.payment.checkout.s3-website.us-east-2.amazonaws.com'
@@ -96,7 +100,7 @@ class Dashboard extends Component<IProps, IState> {
           />
           <Button
             buttonStyle={styles.greenButton}
-            title="SALIR"
+            title='SALIR'
             titleStyle={{ color: theme.colors.secondary }}
             onPress={() =>
               Auth.signOut({ global: true })
@@ -108,9 +112,9 @@ class Dashboard extends Component<IProps, IState> {
             }
           />
         </View>
-        <Rectangle w={150} h={160} t={220} />
-        <Rectangle w={130} h={150} t={60} />
-        <Rectangle w={120} h={130} t={160} />
+        <Rectangle w={wp('29%')} h={hp('32%')} t={hp('26%')} />
+        <Rectangle w={wp('32%')} h={hp('34%')} t={hp('6%')} />
+        <Rectangle w={wp('26%')} h={hp('26%')} t={hp('19%')} />
       </LinearGradient>
     );
   }
@@ -118,20 +122,19 @@ class Dashboard extends Component<IProps, IState> {
 
 const pageStyles = StyleSheet.create({
   balance: {
-    width: 230,
-    height: 230,
-    padding: 30,
-    marginBottom: '45%',
-    marginRight: '30%',
-    borderRadius: 230 / 2,
+    width: hp('25%'),
+    height: hp('25%'),
+    padding: hp('3%'),
+    marginBottom: hp('35%'),
+    marginRight: hp('25%'),
+    borderRadius: hp('25%') / 2,
     backgroundColor: theme.colors.secondary
   },
   cmu_number: {
     color: theme.colors.white,
-    fontSize: 50,
+    fontSize: hp('6%'),
     fontWeight: '600',
-    textAlign: 'center',
-    height: 80
+    textAlign: 'center'
   }
 });
 

@@ -29,6 +29,10 @@ import {
 import { CreateTransactionsInput, Transaction_status } from '../../API';
 import _ from 'lodash';
 import Snackbar from 'react-native-snackbar-component';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -46,7 +50,7 @@ const Rectangle = props => {
       style={{
         position: 'absolute',
         width: w,
-        height: h * 1.5,
+        height: h,
         zIndex: 0,
         top: t,
         right: 0,
@@ -157,6 +161,7 @@ class TransactionsScreen extends Component<IProps, IState> {
     } else {
       this.setState({
         snackIsVisible: true,
+        loader: false,
         errorMessage: 'No tienes suficientes CMUs :('
       });
     }
@@ -173,8 +178,8 @@ class TransactionsScreen extends Component<IProps, IState> {
         <View
           style={{
             flex: 1,
+            padding: hp('2%'),
             width: '100%',
-            padding: 20,
             alignItems: 'center'
           }}>
           <Text style={styles.label}>Nombre parchado</Text>
@@ -210,11 +215,10 @@ class TransactionsScreen extends Component<IProps, IState> {
       content = (
         <View
           style={{
-            flex: 1,
+            height: hp('30%'),
             width: '100%',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: 20
+            padding: hp('2%')
           }}>
           <Input
             textContentType='telephoneNumber'
@@ -268,7 +272,7 @@ class TransactionsScreen extends Component<IProps, IState> {
         <View
           style={[
             styles.innerPage,
-            { zIndex: 1, elevation: 1, paddingTop: 40 }
+            { zIndex: 1, elevation: 1, paddingTop: hp('8%') }
           ]}>
           <BlurView style={pageStyles.title} tint='default' intesity={40}>
             <Text style={pageStyles.cmu_number}>Datos del pago</Text>
@@ -278,9 +282,9 @@ class TransactionsScreen extends Component<IProps, IState> {
           </BlurView>
           {content}
         </View>
-        <Rectangle w={120} h={115} t={70} />
-        <Rectangle w={90} h={70} t={0} />
-        <Rectangle w={120} h={130} t={120} />
+        <Rectangle w={wp('29%')} h={hp('32%')} t={hp('12%')} />
+        <Rectangle w={wp('37%%')} h={hp('34%')} t={0} />
+        <Rectangle w={wp('26%')} h={hp('26%')} t={hp('5%')} />
       </LinearGradient>
     );
   }
@@ -289,13 +293,13 @@ class TransactionsScreen extends Component<IProps, IState> {
 const pageStyles = StyleSheet.create({
   title: {
     width: '100%',
-    height: 120,
-    padding: 20,
+    height: hp('20%'),
+    padding: hp('2%'),
     backgroundColor: theme.colors.secondary
   },
   cmu_number: {
     color: theme.colors.white,
-    fontSize: 42,
+    fontSize: hp('6%'),
     fontWeight: '600',
     textAlign: 'left'
   }

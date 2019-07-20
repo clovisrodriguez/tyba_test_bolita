@@ -1,3 +1,8 @@
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
+
 export const theme = {
   colors: {
     primary: '#88B91E',
@@ -9,7 +14,7 @@ export const theme = {
   },
   button: {
     backgroundColor: '#88B91E',
-    width: 320,
+    width: wp('80%'),
     color: '#0F253C',
     marginBottom: 12,
     marginTop: 12,
@@ -21,7 +26,7 @@ export const styles: any = {
   answer: {
     color: theme.colors.white,
     fontStyle: 'italic',
-    fontSize: 18,
+    fontSize: hp('3%'),
     marginTop: 2,
     marginBottom: 8,
     textAlign: 'center'
@@ -30,38 +35,33 @@ export const styles: any = {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    height: '100%',
-    width: '100%'
+    padding: hp('3%'),
+    height: hp('100%'),
+    width: wp('100%')
   },
   greenButton: {
     borderRadius: 23,
-    height: 56,
-    width: 320,
-    marginTop: 13,
-    marginBottom: 13,
+    height: hp('8%'),
+    width: wp('80%'),
+    marginTop: hp('2%'),
+    marginBottom: hp('2%'),
     backgroundColor: theme.colors.primary
   },
   greenButtonOutline: {
     borderRadius: 23,
-    height: 56,
-    width: 320,
-    marginTop: 13,
-    marginBottom: 13
+    height: hp('8%'),
+    width: wp('80%'),
+    marginTop: hp('2%'),
+    marginBottom: hp('2%')
   },
   innerPage: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     zIndex: 1,
     elevation: 3
   },
   input: {
-    height: 40,
-    width: 319,
+    height: hp('6%'),
     backgroundColor: '#fff',
     marginTop: 12,
     marginBottom: 12,
@@ -77,10 +77,10 @@ export const styles: any = {
   label: {
     color: theme.colors.white,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: hp('3%'),
     fontWeight: 'bold',
-    marginTop: 12,
-    marginBottom: 12
+    marginTop: hp('1%'),
+    marginBottom: hp('1%')
   },
   lottie: {
     width: 100,

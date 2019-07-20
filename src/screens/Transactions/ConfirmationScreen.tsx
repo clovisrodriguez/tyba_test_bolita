@@ -49,7 +49,7 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
 
   render() {
     const { transactionUser, phone_number, loading } = this.state;
-    const { user } = this.props;
+    const { user, navigation } = this.props;
 
     return (
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
@@ -88,7 +88,7 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
               buttonStyle={styles.greenButton}
               title='VOLVER AL INICIO'
               titleStyle={{ color: theme.colors.secondary }}
-              onPress={() => console.log('click')}
+              onPress={() => navigation.navigate(ROUTES.Dashboard)}
             />
           </View>
         </View>

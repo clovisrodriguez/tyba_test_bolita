@@ -21,11 +21,15 @@ import {
   faKey
 } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../../assets/logo-white-shadow.png';
-import { Auth } from 'aws-amplify';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import updateUser from '../../store/actions/storeUser';
 import { CreateUserInput, User_type } from '../../API';
+import { Auth } from 'aws-amplify';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -144,10 +148,10 @@ class LoginScreen extends Component<IProps, IState> {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" style={pageStyles.container}>
+      <KeyboardAvoidingView behavior='padding' style={pageStyles.container}>
         <AnimatedLoader
           visible={this.state.loading}
-          overlayColor="rgba(255,255,255,0.75)"
+          overlayColor='rgba(255,255,255,0.75)'
           animationStyle={styles.lottie}
           speed={1}
         />
@@ -158,7 +162,7 @@ class LoginScreen extends Component<IProps, IState> {
         />
         <Image source={logo} style={pageStyles.logo} />
         <Input
-          textContentType="name"
+          textContentType='name'
           leftIcon={
             <FontAwesomeIcon
               icon={faPoo}
@@ -173,7 +177,7 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
-          placeholder="Ingresa tu nombre"
+          placeholder='Ingresa tu nombre'
           inputContainerStyle={{ borderBottomWidth: 0 }}
           onChangeText={value => this.updateText(NAME, value)}
           errorMessage={
@@ -183,8 +187,8 @@ class LoginScreen extends Component<IProps, IState> {
           }
         />
         <Input
-          keyboardType="email-address"
-          textContentType="emailAddress"
+          keyboardType='email-address'
+          textContentType='emailAddress'
           leftIcon={
             <FontAwesomeIcon
               icon={faEnvelope}
@@ -199,7 +203,7 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
-          placeholder="Ingresa tu correo"
+          placeholder='Ingresa tu correo'
           inputContainerStyle={{ borderBottomWidth: 0 }}
           onChangeText={value => this.updateText(EMAIL, value)}
           errorMessage={
@@ -207,8 +211,8 @@ class LoginScreen extends Component<IProps, IState> {
           }
         />
         <Input
-          textContentType="telephoneNumber"
-          keyboardType="phone-pad"
+          textContentType='telephoneNumber'
+          keyboardType='phone-pad'
           leftIcon={
             <FontAwesomeIcon
               icon={faMobile}
@@ -224,7 +228,7 @@ class LoginScreen extends Component<IProps, IState> {
           }}
           inputStyle={styles.input}
           value={this.state.phone_number}
-          placeholder="Ingresa tu celular"
+          placeholder='Ingresa tu celular'
           inputContainerStyle={{ borderBottomWidth: 0 }}
           onChangeText={value => this.updateText(PHONE_NUMBER, value)}
           errorMessage={
@@ -234,8 +238,8 @@ class LoginScreen extends Component<IProps, IState> {
           }
         />
         <Input
-          keyboardType="default"
-          textContentType="password"
+          keyboardType='default'
+          textContentType='password'
           secureTextEntry={true}
           leftIcon={
             <FontAwesomeIcon
@@ -251,7 +255,7 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
-          placeholder="Elige una clave"
+          placeholder='Elige una clave'
           inputContainerStyle={{ borderBottomWidth: 0 }}
           onChangeText={value => this.updateText(PASSAWORD, value)}
           errorMessage={
@@ -261,8 +265,8 @@ class LoginScreen extends Component<IProps, IState> {
           }
         />
         <Input
-          keyboardType="default"
-          textContentType="password"
+          keyboardType='default'
+          textContentType='password'
           secureTextEntry={true}
           leftIcon={
             <FontAwesomeIcon
@@ -278,7 +282,7 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
-          placeholder="Repite tu clave"
+          placeholder='Repite tu clave'
           inputContainerStyle={{ borderBottomWidth: 0 }}
           onChangeText={value => this.updateText(REPEAT_PASSWORD, value)}
           errorMessage={
@@ -289,7 +293,7 @@ class LoginScreen extends Component<IProps, IState> {
         />
         <Button
           buttonStyle={styles.greenButton}
-          title="UNIRTE"
+          title='UNIRTE'
           titleStyle={{ color: '#fff', fontWeight: 'bold' }}
           onPress={this.signUp.bind(this)}
           disabled={enableSubmit(this.state)}
@@ -297,8 +301,7 @@ class LoginScreen extends Component<IProps, IState> {
         <Text
           onPress={() => {
             this.props.navigation.navigate(ROUTES.HomeScreen);
-          }}
-        >
+          }}>
           Volver
         </Text>
       </KeyboardAvoidingView>
@@ -312,12 +315,12 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.whiteBackground,
-    padding: 20
+    padding: wp('5%')
   },
   logo: {
     width: 104,
     height: 112,
-    marginBottom: '10%'
+    marginBottom: hp('10%')
   }
 });
 

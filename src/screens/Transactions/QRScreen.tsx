@@ -19,6 +19,7 @@ import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ROUTES } from '../../routes';
 import base64 from 'react-native-base64';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface QRComponent {
   translateY: Animated.Value;
@@ -38,7 +39,7 @@ interface IState {
 }
 
 class QRComponent extends Component<IProps> {
-  screenHeight = Dimensions.get('window').height * 0.68;
+  screenHeight = Dimensions.get('window').height * 0.7;
   translateY = new Animated.Value(0);
   _panResponder = PanResponder.create({
     onMoveShouldSetPanResponderCapture: () => true,
@@ -63,7 +64,7 @@ class QRComponent extends Component<IProps> {
 
     console.log(base64.decode(QRdata));
     return (
-      <View style={{ elevation: 3, position: 'absolute', width: '100%' }}>
+      <View style={{ width: '100%', overflow: 'visible' }}>
         <Animated.View
           style={[
             pageStyles.toggler,
@@ -94,12 +95,12 @@ class QRComponent extends Component<IProps> {
               transform: [{ translateY: this.translateY }]
             }
           ]}>
-          <Text style={{ marginBottom: 20 }}>
+          <Text style={{ marginBottom: hp('4%') }}>
             ¡Utiliza tu QR para que te pasen más CMUs!
           </Text>
           <QRCode value={QRdata} size={300} bgColor='black' fgColor='white' />
           <Text
-            style={{ textAlign: 'center', marginTop: 20 }}
+            style={{ textAlign: 'center', marginTop: hp('4%') }}
             onPress={() =>
               this.props.navigation.navigate(ROUTES.TransactionsScreen)
             }>
@@ -142,7 +143,14 @@ class QRScreen extends Component<IProps, IState> {
     const { hasCameraPermission, scanned, loading } = this.state;
 
     if (hasCameraPermission === null) {
-      return <Text>Requesting for camera permission</Text>;
+      return (
+        <AnimatedLoader
+          visible={loading}
+          overlayColor='rgba(164,220,34,0.75)'
+          animationStyle={styles.lottie}
+          speed={1}
+        />
+      );
     }
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
@@ -186,16 +194,16 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'center'
   },
   box: {
-    height: 500,
+    height: hp('70%'),
     width: '100%',
     backgroundColor: theme.colors.white,
-    padding: 30,
+    padding: hp('4%'),
     alignItems: 'center',
     justifyContent: 'center'
   },
   toggler: {
     marginTop: '20%',
-    height: '10%',
+    height: hp('10%'),
     width: '100%',
     borderWidth: 1,
     borderColor: theme.colors.grey,
