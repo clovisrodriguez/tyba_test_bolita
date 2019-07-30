@@ -34,6 +34,7 @@ export type CreateTransactionsInput = {
   createAt: string,
   cmus: number,
   status: Transaction_status,
+  type: Transaction_type,
   transactionsFromId: string,
   transactionsToId: string,
 };
@@ -45,11 +46,19 @@ export enum Transaction_status {
 }
 
 
+export enum Transaction_type {
+  CASH_IN = "CASH_IN",
+  CASH_OUT = "CASH_OUT",
+  USER_TRANSACTION = "USER_TRANSACTION",
+}
+
+
 export type UpdateTransactionsInput = {
   id: string,
   createAt?: string | null,
   cmus?: number | null,
   status?: Transaction_status | null,
+  type?: Transaction_type | null,
   transactionsFromId?: string | null,
   transactionsToId?: string | null,
 };
@@ -118,6 +127,7 @@ export type ModelTransactionsFilterInput = {
   createAt?: ModelStringFilterInput | null,
   cmus?: ModelFloatFilterInput | null,
   status?: ModelTransaction_statusFilterInput | null,
+  type?: ModelTransaction_typeFilterInput | null,
   and?: Array< ModelTransactionsFilterInput | null > | null,
   or?: Array< ModelTransactionsFilterInput | null > | null,
   not?: ModelTransactionsFilterInput | null,
@@ -126,6 +136,11 @@ export type ModelTransactionsFilterInput = {
 export type ModelTransaction_statusFilterInput = {
   eq?: Transaction_status | null,
   ne?: Transaction_status | null,
+};
+
+export type ModelTransaction_typeFilterInput = {
+  eq?: Transaction_type | null,
+  ne?: Transaction_type | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -205,6 +220,7 @@ export type CreateTransactionsMutation = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -237,6 +253,7 @@ export type UpdateTransactionsMutation = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -269,6 +286,7 @@ export type DeleteTransactionsMutation = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -339,6 +357,7 @@ export type GetTransactionsQuery = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -375,6 +394,7 @@ export type ListTransactionssQuery = {
       },
       cmus: number,
       status: Transaction_status,
+      type: Transaction_type,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -441,6 +461,7 @@ export type OnCreateTransactionsSubscription = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -469,6 +490,7 @@ export type OnUpdateTransactionsSubscription = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };
 
@@ -497,5 +519,6 @@ export type OnDeleteTransactionsSubscription = {
     },
     cmus: number,
     status: Transaction_status,
+    type: Transaction_type,
   } | null,
 };

@@ -33,7 +33,6 @@ class ConfirmationScreen extends Component<IProps, IState> {
   };
 
   resendConfirmationCode() {
-    console.log('this run');
     Auth.resendSignUp(this.props.user.phone_number).then(res =>
       console.log('resend confirmation', res)
     );
@@ -50,9 +49,8 @@ class ConfirmationScreen extends Component<IProps, IState> {
       .then(res => {
         console.log(res);
         Auth.signIn(user.phone_number, password)
-          .then(authUser => {
+          .then(() => {
             console.log('sign succesfully');
-            user.id = authUser.signInUserSession.accessToken.payload.username;
             createUser(user)
               .then(res => {
                 this.setState({ loading: false });

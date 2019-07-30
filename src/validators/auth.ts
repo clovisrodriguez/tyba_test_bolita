@@ -1,5 +1,5 @@
 export const validateUserName = name => {
-  const regex = /^[a-z]{3,10}$/;
+  const regex = /[0-9a-zA-Z]{3,12}$/;
   return regex.test(name);
 };
 

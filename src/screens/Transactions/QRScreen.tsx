@@ -12,14 +12,17 @@ import { connect } from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 import { styles, theme } from '../../theme/index';
 import { CreateUserInput } from '../../API';
-import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode-svg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faGripLines } from '@fortawesome/free-solid-svg-icons';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ROUTES } from '../../routes';
 import base64 from 'react-native-base64';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp
+} from 'react-native-responsive-screen';
 
 interface QRComponent {
   translateY: Animated.Value;
@@ -38,9 +41,9 @@ interface IState {
   loading?: boolean;
 }
 
-class QRComponent extends Component<IProps> {
+class QRComponent extends Component<IProps, IState> {
   screenHeight = Dimensions.get('window').height * 0.7;
-  translateY = new Animated.Value(0);
+  translateY = new Animated.Value(this.screenHeight);
   _panResponder = PanResponder.create({
     onMoveShouldSetPanResponderCapture: () => true,
     onPanResponderMove: Animated.event([null, { dy: this.translateY }]),
@@ -58,13 +61,13 @@ class QRComponent extends Component<IProps> {
       }
     }
   });
+
   render() {
     const { user } = this.props;
     const QRdata = base64.encode(JSON.stringify(user));
 
-    console.log(base64.decode(QRdata));
     return (
-      <View style={{ width: '100%', overflow: 'visible' }}>
+      <View style={{ width: '100%' }}>
         <Animated.View
           style={[
             pageStyles.toggler,
@@ -81,9 +84,9 @@ class QRComponent extends Component<IProps> {
           <Text
             style={{
               textAlign: 'center',
-              fontSize: 18,
+              fontSize: hp('2%'),
               color: theme.colors.grey,
-              height: 22
+              height: hp('4%')
             }}>
             QR de {user.nickname}
           </Text>
@@ -95,12 +98,21 @@ class QRComponent extends Component<IProps> {
               transform: [{ translateY: this.translateY }]
             }
           ]}>
-          <Text style={{ marginBottom: hp('4%') }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: hp('2%'),
+              marginBottom: hp('4%')
+            }}>
             ¡Utiliza tu QR para que te pasen más CMUs!
           </Text>
-          <QRCode value={QRdata} size={300} bgColor='black' fgColor='white' />
+          <QRCode value={QRdata} size={wp('80%')} />
           <Text
-            style={{ textAlign: 'center', marginTop: hp('4%') }}
+            style={{
+              textAlign: 'center',
+              fontSize: hp('2%'),
+              marginTop: hp('4%')
+            }}
             onPress={() =>
               this.props.navigation.navigate(ROUTES.TransactionsScreen)
             }>

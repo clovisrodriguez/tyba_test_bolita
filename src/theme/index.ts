@@ -7,6 +7,7 @@ export const theme = {
   colors: {
     primary: '#88B91E',
     secondary: '#0F253C',
+    disabled: '#3A5403',
     grey: '#adadad',
     white: '#FFF',
     whiteBackground: '#EAEAEA',
@@ -26,7 +27,7 @@ export const styles: any = {
   answer: {
     color: theme.colors.white,
     fontStyle: 'italic',
-    fontSize: hp('3%'),
+    fontSize: wp('4%'),
     marginTop: 2,
     marginBottom: 8,
     textAlign: 'center'
@@ -43,16 +44,16 @@ export const styles: any = {
     borderRadius: 23,
     height: hp('8%'),
     width: wp('80%'),
-    marginTop: hp('2%'),
-    marginBottom: hp('2%'),
+    marginTop: hp('1%'),
+    marginBottom: hp('1%'),
     backgroundColor: theme.colors.primary
   },
   greenButtonOutline: {
     borderRadius: 23,
     height: hp('8%'),
     width: wp('80%'),
-    marginTop: hp('2%'),
-    marginBottom: hp('2%')
+    marginTop: hp('1%'),
+    marginBottom: hp('1%')
   },
   innerPage: {
     flex: 1,
@@ -77,10 +78,10 @@ export const styles: any = {
   label: {
     color: theme.colors.white,
     textAlign: 'center',
-    fontSize: hp('3%'),
+    fontSize: wp('4%'),
     fontWeight: 'bold',
-    marginTop: hp('1%'),
-    marginBottom: hp('1%')
+    marginTop: wp('1%'),
+    marginBottom: wp('1%')
   },
   lottie: {
     width: 100,

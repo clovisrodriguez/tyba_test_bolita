@@ -14,6 +14,13 @@ type Transactions @model {
   to: User! @connection
   cmus: Float!
   status: Transaction_status!
+  type: Transaction_type!
+}
+
+enum Transaction_type {
+  CASH_IN
+  CASH_OUT
+  USER_TRANSACTION
 }
 
 enum Transaction_status {

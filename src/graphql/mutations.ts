@@ -56,6 +56,7 @@ export const createTransactions = `mutation CreateTransactions($input: CreateTra
     }
     cmus
     status
+    type
   }
 }
 `;
@@ -81,6 +82,7 @@ export const updateTransactions = `mutation UpdateTransactions($input: UpdateTra
     }
     cmus
     status
+    type
   }
 }
 `;
@@ -106,6 +108,7 @@ export const deleteTransactions = `mutation DeleteTransactions($input: DeleteTra
     }
     cmus
     status
+    type
   }
 }
 `;

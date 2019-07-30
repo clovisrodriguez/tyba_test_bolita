@@ -50,20 +50,28 @@ class Dashboard extends Component<IProps, IState> {
 
   render() {
     const { user } = this.props;
-    const validUser = Object.keys(user).length > 0;
+    const validUser = user ? Object.keys(user).length > 0 : false;
     let loading = false;
 
     if (!validUser) {
       loading = true;
       let userName;
-      Auth.currentAuthenticatedUser().then(authUser => {
-        userName = authUser.signInUserSession.accessToken.payload.username;
-        getUser(userName).then((userTable: any) => {
-          updateUser(userTable.data.getUser);
-          loading = false;
-        });
-      });
+      Auth.currentAuthenticatedUser()
+        .then(authUser => {
+          userName = authUser.signInUserSession.idToken.payload.phone_number;
+          getUser(userName)
+            .then((userTable: any) => {
+              updateUser(userTable.data.getUser);
+              loading = false;
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
     }
+
+    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${
+      user.id
+    }&nickname=${user.nickname}&email=${user.email}`;
 
     return (
       <LinearGradient
@@ -92,11 +100,7 @@ class Dashboard extends Component<IProps, IState> {
             title='COMPRAR CMUS'
             buttonStyle={styles.greenButtonOutline}
             type='outline'
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                'http://cmu.payment.checkout.s3-website.us-east-2.amazonaws.com'
-              )
-            }
+            onPress={() => WebBrowser.openBrowserAsync(url)}
           />
           <Button
             buttonStyle={styles.greenButton}
@@ -125,14 +129,16 @@ const pageStyles = StyleSheet.create({
     width: hp('25%'),
     height: hp('25%'),
     padding: hp('3%'),
-    marginBottom: hp('35%'),
+    paddingTop: hp('5%'),
+    marginBottom: hp('30%'),
+    marginTop: hp('5%'),
     marginRight: hp('25%'),
     borderRadius: hp('25%') / 2,
     backgroundColor: theme.colors.secondary
   },
   cmu_number: {
     color: theme.colors.white,
-    fontSize: hp('6%'),
+    fontSize: hp('5%'),
     fontWeight: '600',
     textAlign: 'center'
   }

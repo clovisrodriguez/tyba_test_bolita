@@ -21,12 +21,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMobile } from '@fortawesome/free-solid-svg-icons';
 import { formatPhoneNumber } from '../../validators/format';
 import {
-  getAllUser,
+  getUser,
   createTransaction,
   updateTransaction,
   updateUserDB
 } from '../../client/index';
-import { CreateTransactionsInput, Transaction_status } from '../../API';
+import { CreateTransactionsInput, Transaction_status, Transaction_type } from '../../API';
 import _ from 'lodash';
 import Snackbar from 'react-native-snackbar-component';
 import {
@@ -92,25 +92,21 @@ class TransactionsScreen extends Component<IProps, IState> {
     Keyboard.dismiss();
     const { phone_number } = this.state;
     const phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-    getAllUser()
-      .then((allUsers: any) => {
-        const match = _.find(
-          allUsers.data.listUsers.items,
-          user => user.phone_number === phoneNumber
-        );
-        match
-          ? this.setState({ transactionUser: match })
-          : this.setState({
-              errorMessage: 'No se encontro usuario con ese número',
+    this.props.user.phone_number !== phoneNumber
+      ? getUser(phoneNumber).then((userTable: any) => {
+          const transactionUser = userTable.data.getUser;
+          this.setState({ transactionUser });
+          !transactionUser &&
+            this.setState({
+              errorMessage: 'El número que estas buscando no esta :(',
               snackIsVisible: true
             });
-      })
-      .catch(() =>
-        this.setState({
-          errorMessage: 'Hubo un error, intenta nuevamente',
-          snackIsVisible: true
         })
-      );
+      : this.setState({
+          phone_number: null,
+          snackIsVisible: true,
+          errorMessage: 'no puedes enviarte CMUs a tí mismo... ¡Qué loco!'
+        });
   }
 
   sendMoney() {
@@ -123,10 +119,11 @@ class TransactionsScreen extends Component<IProps, IState> {
     if (user.cmus >= cmus) {
       const transaction: CreateTransactionsInput = {
         createAt: new Date().toISOString(),
-        cmus: cmus,
+        cmus: cmus.toFixed(1),
         status: Transaction_status.PENDING,
         transactionsFromId: user.id,
-        transactionsToId: transactionUser.id
+        transactionsToId: transactionUser.id,
+        type: Transaction_type.USER_TRANSACTION
       };
       createTransaction(transaction)
         .then((res: any) => {
@@ -149,7 +146,8 @@ class TransactionsScreen extends Component<IProps, IState> {
                   }).catch(res => console.log(res));
                   updateUser(data.data.updateUser);
                   navigation.navigate(ROUTES.ConfirmationTransactionScreen, {
-                    transactionUser: JSON.stringify(transactionUser)
+                    transactionUser: JSON.stringify(transactionUser),
+                    transaction: JSON.stringify(transaction)
                   });
                 });
               console.log('SUCCESFUL');
@@ -161,14 +159,14 @@ class TransactionsScreen extends Component<IProps, IState> {
     } else {
       this.setState({
         snackIsVisible: true,
-        loader: false,
+        loading: false,
         errorMessage: 'No tienes suficientes CMUs :('
       });
     }
   }
 
   render() {
-    const { transactionUser, phone_number, loading } = this.state;
+    const { transactionUser, phone_number, loading, cmus } = this.state;
     const { user } = this.props;
 
     let content;
@@ -178,7 +176,7 @@ class TransactionsScreen extends Component<IProps, IState> {
         <View
           style={{
             flex: 1,
-            padding: hp('2%'),
+            padding: hp('3%'),
             width: '100%',
             alignItems: 'center'
           }}>
@@ -198,9 +196,14 @@ class TransactionsScreen extends Component<IProps, IState> {
           />
           <Button
             buttonStyle={styles.greenButton}
+            disabledStyle={{ backgroundColor: theme.colors.disabled }}
+            disabledTitleStyle={{
+              color: theme.colors.secondary
+            }}
             title='ENVIAR'
             titleStyle={{ color: theme.colors.secondary }}
             onPress={this.sendMoney.bind(this)}
+            disabled={!cmus}
           />
           <Text
             style={styles.answer}
@@ -215,10 +218,9 @@ class TransactionsScreen extends Component<IProps, IState> {
       content = (
         <View
           style={{
-            height: hp('30%'),
             width: '100%',
             alignItems: 'center',
-            padding: hp('2%')
+            padding: hp('3%')
           }}>
           <Input
             textContentType='telephoneNumber'
@@ -244,13 +246,12 @@ class TransactionsScreen extends Component<IProps, IState> {
           />
           <Button
             buttonStyle={styles.greenButton}
+            disabledStyle={{ backgroundColor: theme.colors.disabled }}
+            disabledTitleStyle={{ color: theme.colors.secondary }}
             title='BUSCAR'
             titleStyle={{ color: theme.colors.secondary }}
             onPress={this.searchUserByNumber.bind(this)}
-            disabled={
-              !phone_number ||
-              phone_number === formatPhoneNumber(user.phone_number)
-            }
+            disabled={!phone_number}
           />
         </View>
       );
@@ -272,7 +273,7 @@ class TransactionsScreen extends Component<IProps, IState> {
         <View
           style={[
             styles.innerPage,
-            { zIndex: 1, elevation: 1, paddingTop: hp('8%') }
+            { zIndex: 1, elevation: 1, paddingTop: hp('5%') }
           ]}>
           <BlurView style={pageStyles.title} tint='default' intesity={40}>
             <Text style={pageStyles.cmu_number}>Datos del pago</Text>
@@ -282,9 +283,7 @@ class TransactionsScreen extends Component<IProps, IState> {
           </BlurView>
           {content}
         </View>
-        <Rectangle w={wp('29%')} h={hp('32%')} t={hp('12%')} />
-        <Rectangle w={wp('37%%')} h={hp('34%')} t={0} />
-        <Rectangle w={wp('26%')} h={hp('26%')} t={hp('5%')} />
+        <Rectangle w={wp('28%')} h={hp('34%')} t={0} />
       </LinearGradient>
     );
   }
@@ -293,7 +292,7 @@ class TransactionsScreen extends Component<IProps, IState> {
 const pageStyles = StyleSheet.create({
   title: {
     width: '100%',
-    height: hp('20%'),
+    height: hp('16%'),
     padding: hp('2%'),
     backgroundColor: theme.colors.secondary
   },

@@ -10,6 +10,10 @@ import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
 import { Button } from 'react-native-elements';
 import { formatPhoneNumber } from '../../validators/format';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -32,7 +36,7 @@ const Rectangle = props => {
         top: t,
         right: 0,
         borderRadius: 20,
-        transform: [{ rotate: '270deg' }]
+        transform: [{ rotate: '120deg' }]
       }}
     />
   );
@@ -40,15 +44,17 @@ const Rectangle = props => {
 
 class ConfirmationTransactionScreen extends Component<IProps, IState> {
   state = {
-    phone_number: null,
     transactionUser: JSON.parse(
       this.props.navigation.getParam('transactionUser', null)
+    ),
+    transaction: JSON.parse(
+      this.props.navigation.getParam('transaction', null)
     ),
     loading: false
   };
 
   render() {
-    const { transactionUser, phone_number, loading } = this.state;
+    const { transactionUser, transaction, loading } = this.state;
     const { user, navigation } = this.props;
 
     return (
@@ -77,14 +83,16 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
               padding: 20,
               alignItems: 'center'
             }}>
-            <Text style={styles.label}>Datos de la transacción</Text>
             <Text style={styles.label}>Nombre parchado</Text>
             <Text style={styles.answer}>{transactionUser.nickname}</Text>
             <Text style={styles.label}>Número del cashie</Text>
             <Text style={styles.answer}>
               {formatPhoneNumber(transactionUser.phone_number)}
             </Text>
+            <Text style={styles.label}>CMUS</Text>
+            <Text style={styles.answer}>{transaction.cmus}</Text>
             <Button
+              style={{ marginTop: hp('20%') }}
               buttonStyle={styles.greenButton}
               title='VOLVER AL INICIO'
               titleStyle={{ color: theme.colors.secondary }}
@@ -92,9 +100,8 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
             />
           </View>
         </View>
-        <Rectangle w={120} h={115} t={70} />
-        <Rectangle w={90} h={70} t={0} />
-        <Rectangle w={120} h={130} t={120} />
+        <Rectangle w={wp('28%')} h={hp('34%')} t={hp('70%')} />
+        <Rectangle w={wp('15%')} h={hp('25%')} t={hp('80%')} />
       </LinearGradient>
     );
   }
@@ -103,13 +110,13 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
 const pageStyles = StyleSheet.create({
   title: {
     width: '100%',
-    height: 120,
-    padding: 20,
+    height: hp('16%'),
+    padding: hp('2%'),
     backgroundColor: theme.colors.secondary
   },
   cmu_number: {
     color: theme.colors.white,
-    fontSize: 42,
+    fontSize: hp('6%'),
     fontWeight: '600',
     textAlign: 'left'
   }

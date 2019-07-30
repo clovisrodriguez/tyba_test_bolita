@@ -56,6 +56,7 @@ export const onCreateTransactions = `subscription OnCreateTransactions {
     }
     cmus
     status
+    type
   }
 }
 `;
@@ -81,6 +82,7 @@ export const onUpdateTransactions = `subscription OnUpdateTransactions {
     }
     cmus
     status
+    type
   }
 }
 `;
@@ -106,6 +108,7 @@ export const onDeleteTransactions = `subscription OnDeleteTransactions {
     }
     cmus
     status
+    type
   }
 }
 `;

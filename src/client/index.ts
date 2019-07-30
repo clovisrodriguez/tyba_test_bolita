@@ -1,6 +1,8 @@
+import * as Observable from 'zen-observable';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as mutations from '../graphql/mutations';
 import * as queries from '../graphql/queries';
+import * as subscriptions from '../graphql/subscriptions';
 import {
   CreateUserInput,
   CreateTransactionsInput,
@@ -31,3 +33,7 @@ export const updateTransaction = async (transaction: UpdateTransactionsInput) =>
       input: transaction
     })
   );
+
+export const onUpdateTransactionSubscription = API.graphql(
+  graphqlOperation(subscriptions.onUpdateTransactions)
+) as Observable<any>;

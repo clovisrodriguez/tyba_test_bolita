@@ -52,6 +52,7 @@ export const getTransactions = `query GetTransactions($id: ID!) {
     }
     cmus
     status
+    type
   }
 }
 `;
@@ -82,6 +83,7 @@ export const listTransactionss = `query ListTransactionss(
       }
       cmus
       status
+      type
     }
     nextToken
   }

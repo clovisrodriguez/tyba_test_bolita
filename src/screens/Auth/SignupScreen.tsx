@@ -62,7 +62,7 @@ class LoginScreen extends Component<IProps, IState> {
 
   updateText(key, value) {
     if (key === NAME) {
-      value = value.toLowerCase();
+      value = value.trimEnd();
     }
 
     if (key === PHONE_NUMBER) {
@@ -125,7 +125,7 @@ class LoginScreen extends Component<IProps, IState> {
     })
       .then(() => {
         const user: CreateUserInput = {
-          id: null,
+          id: phoneNumber,
           type: User_type.REGULAR_USER,
           nickname: name,
           phone_number: phoneNumber,
@@ -183,7 +183,7 @@ class LoginScreen extends Component<IProps, IState> {
           errorMessage={
             this.state.valid_name
               ? ''
-              : 'Tu primer nombre entre 3 a 10 caracteres, una sola palabra'
+              : 'Tu alias parce de 3 a 12 caracteres, una sola palabra'
           }
         />
         <Input

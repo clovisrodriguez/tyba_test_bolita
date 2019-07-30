@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, KeyboardAvoidingView, Text } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Text,
+  Keyboard
+} from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { Button, Input } from 'react-native-elements';
@@ -36,14 +42,20 @@ class LoginScreen extends Component<IProps, IState> {
   };
 
   updateText(key, value) {
+    const { password, phone_number } = this.state;
+
     if (key === PHONE_NUMBER) {
       value = formatPhoneNumber(value);
     }
 
-    if (this.state.password && this.state.phone_number) {
-      this.setState({
-        isDisable: false
-      });
+    console.log(password);
+
+    if (phone_number) {
+      value &&
+        key === PASSAWORD &&
+        this.setState({
+          isDisable: false
+        });
     }
 
     this.setState({
@@ -52,6 +64,7 @@ class LoginScreen extends Component<IProps, IState> {
   }
 
   signIn() {
+    Keyboard.dismiss();
     this.setState({
       loading: true
     });
