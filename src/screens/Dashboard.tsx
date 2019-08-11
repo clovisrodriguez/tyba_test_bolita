@@ -109,10 +109,12 @@ class Dashboard extends Component<IProps, IState> {
             onPress={() =>
               Auth.signOut({ global: true })
                 .then(() => {
-                  updateUser({});
                   this.props.navigation.navigate(ROUTES.HomeScreen);
+                  updateUser({});
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                  console.log(err);
+                })
             }
           />
         </View>
