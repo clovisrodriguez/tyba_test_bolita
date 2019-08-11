@@ -28,6 +28,11 @@ export const validatePhoneNumber = number => {
   return regex.test(number);
 };
 
+export const validateCode = code => {
+  const regex = /[0-9]{6}$/;
+  return regex.test(code);
+}
+
 export const enableSubmit = state => {
   const {
     name,

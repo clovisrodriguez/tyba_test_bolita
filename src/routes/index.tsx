@@ -14,16 +14,18 @@ import Dashboard from '../screens/Dashboard';
 import QRScreen from '../screens/Transactions/QRScreen';
 import TransactionsScreen from '../screens/Transactions/TransactionsScreen';
 import ConfirmationTransactionScreen from '../screens/Transactions/ConfirmationScreen';
+import PasswordRecoveryScreen from '../screens/Auth/PasswordRecoveryScreen';
 
 export enum ROUTES {
+  ConfirmationScreen = 'ConfirmationScreen',
+  ConfirmationTransactionScreen = 'ConfirmationTransactionScreen',
+  Dashboard = 'Dashboard',
   HomeScreen = 'HomeScreen',
   LoginScreen = 'LoginScreen',
-  SignupScreen = 'SignupScreen',
-  ConfirmationScreen = 'ConfirmationScreen',
-  Dashboard = 'Dashboard',
   QRScreen = 'QRScreen',
-  TransactionsScreen = 'TransactionsScreen',
-  ConfirmationTransactionScreen = 'ConfirmationTransactionScreen'
+  SignupScreen = 'SignupScreen',
+  PasswordRecoveryScreen = 'PasswordRecoveryScreen',
+  TransactionsScreen = 'TransactionsScreen'
 }
 
 const AuthStack = createStackNavigator({
@@ -38,6 +40,13 @@ const AuthStack = createStackNavigator({
     screen: LoginScreen,
     navigationOptions: {
       title: [ROUTES.LoginScreen],
+      header: null
+    }
+  },
+  [ROUTES.PasswordRecoveryScreen]: {
+    screen: PasswordRecoveryScreen,
+    navigationOptions: {
+      title: [ROUTES.PasswordRecoveryScreen],
       header: null
     }
   },

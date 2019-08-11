@@ -26,7 +26,11 @@ import {
   updateTransaction,
   updateUserDB
 } from '../../client/index';
-import { CreateTransactionsInput, Transaction_status, Transaction_type } from '../../API';
+import {
+  CreateTransactionsInput,
+  Transaction_status,
+  Transaction_type
+} from '../../API';
 import _ from 'lodash';
 import Snackbar from 'react-native-snackbar-component';
 import {
@@ -90,6 +94,7 @@ class TransactionsScreen extends Component<IProps, IState> {
 
   searchUserByNumber() {
     Keyboard.dismiss();
+    this.setState({ loading: true });
     const { phone_number } = this.state;
     const phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
     this.props.user.phone_number !== phoneNumber
@@ -98,11 +103,13 @@ class TransactionsScreen extends Component<IProps, IState> {
           this.setState({ transactionUser });
           !transactionUser &&
             this.setState({
+              loading: false,
               errorMessage: 'El número que estas buscando no esta :(',
               snackIsVisible: true
             });
         })
       : this.setState({
+          loading: false,
           phone_number: null,
           snackIsVisible: true,
           errorMessage: 'no puedes enviarte CMUs a tí mismo... ¡Qué loco!'

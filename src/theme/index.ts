@@ -2,28 +2,24 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+import { StyleSheet } from 'react-native';
 
 export const theme = {
   colors: {
+    darkBackground: ['#0F253C', '#010305'],
+    darkLabel: '#1414141',
+    disabled: '#3A5403',
+    disabledGrey: '#d9d9d9',
+    grey: '#adadad',
     primary: '#88B91E',
     secondary: '#0F253C',
-    disabled: '#3A5403',
-    grey: '#adadad',
+    transparent: 'rgba(20, 20, 20, 0)',
     white: '#FFF',
-    whiteBackground: '#EAEAEA',
-    darkBackground: ['#0F253C', '#010305']
-  },
-  button: {
-    backgroundColor: '#88B91E',
-    width: wp('80%'),
-    color: '#0F253C',
-    marginBottom: 12,
-    marginTop: 12,
-    borderRadius: 23
+    whiteBackground: '#EAEAEA'
   }
 };
 
-export const styles: any = {
+export const styles = StyleSheet.create({
   answer: {
     color: theme.colors.white,
     fontStyle: 'italic',
@@ -61,6 +57,11 @@ export const styles: any = {
     zIndex: 1,
     elevation: 3
   },
+  innerContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   input: {
     height: hp('6%'),
     backgroundColor: '#fff',
@@ -86,5 +87,13 @@ export const styles: any = {
   lottie: {
     width: 100,
     height: 100
+  },
+  simpleButtonWhite: {
+    color: theme.colors.darkLabel,
+    backgroundColor: theme.colors.transparent
+  },
+  whiteTitleButton: {
+    color: '#fff',
+    fontWeight: 'bold'
   }
-};
+});

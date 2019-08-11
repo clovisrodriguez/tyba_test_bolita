@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, KeyboardAvoidingView, Text } from 'react-native';
+import { StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { Button, Input } from 'react-native-elements';
@@ -147,6 +147,8 @@ class LoginScreen extends Component<IProps, IState> {
   }
 
   render() {
+    const { props } = this;
+    const { navigation } = props;
     return (
       <KeyboardAvoidingView behavior='padding' style={pageStyles.container}>
         <AnimatedLoader
@@ -294,16 +296,20 @@ class LoginScreen extends Component<IProps, IState> {
         <Button
           buttonStyle={styles.greenButton}
           title='UNIRTE'
-          titleStyle={{ color: '#fff', fontWeight: 'bold' }}
+          titleStyle={styles.whiteTitleButton}
           onPress={this.signUp.bind(this)}
           disabled={enableSubmit(this.state)}
+          disabledStyle={{ backgroundColor: theme.colors.disabledGrey }}
+          disabledTitleStyle={{ color: theme.colors.grey }}
         />
-        <Text
+        <Button
+          title='Volver'
+          titleStyle={{ color: theme.colors.darkLabel }}
+          buttonStyle={styles.simpleButtonWhite}
           onPress={() => {
-            this.props.navigation.navigate(ROUTES.HomeScreen);
-          }}>
-          Volver
-        </Text>
+            navigation.navigate(ROUTES.HomeScreen);
+          }}
+        />
       </KeyboardAvoidingView>
     );
   }
