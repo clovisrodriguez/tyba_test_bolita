@@ -3,12 +3,14 @@
 
 export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
-    id
-    type
-    nickname
-    phone_number
-    email
     cmus
+    createdAt
+    email
+    id
+    nickname
+    transactions
+    type
+    updatedAt
   }
 }
 `;
@@ -19,71 +21,53 @@ export const listUsers = `query ListUsers(
 ) {
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      id
-      type
-      nickname
-      phone_number
-      email
       cmus
+      createdAt
+      email
+      id
+      nickname
+      transactions
+      type
+      updatedAt
     }
     nextToken
   }
 }
 `;
-export const getTransactions = `query GetTransactions($id: ID!) {
-  getTransactions(id: $id) {
-    id
-    createAt
-    from {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
-    to {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
+export const getTransaction = `query GetTransaction($id: ID!) {
+  getTransaction(id: $id) {
     cmus
-    status
+    createdAt
+    fromId
+    fromNickName
+    id
+    tags
+    toId
+    toNickname
     type
+    status
+    updatedAt
   }
 }
 `;
-export const listTransactionss = `query ListTransactionss(
-  $filter: ModelTransactionsFilterInput
+export const listTransactions = `query ListTransactions(
+  $filter: ModelTransactionFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listTransactionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      id
-      createAt
-      from {
-        id
-        type
-        nickname
-        phone_number
-        email
-        cmus
-      }
-      to {
-        id
-        type
-        nickname
-        phone_number
-        email
-        cmus
-      }
       cmus
-      status
+      createdAt
+      fromId
+      fromNickName
+      id
+      tags
+      toId
+      toNickname
       type
+      status
+      updatedAt
     }
     nextToken
   }

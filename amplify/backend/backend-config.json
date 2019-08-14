@@ -1,12 +1,12 @@
 {
 	"auth": {
-		"userapp8971b3ce": {
+		"rncforgec893ace3": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
 	},
 	"api": {
-		"cmugraph": {
+		"graphforge": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {

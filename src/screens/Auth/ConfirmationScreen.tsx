@@ -33,7 +33,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
   };
 
   resendConfirmationCode() {
-    Auth.resendSignUp(this.props.user.phone_number).then(res =>
+    Auth.resendSignUp(this.props.user.id).then(res =>
       console.log('resend confirmation', res)
     );
   }
@@ -45,10 +45,10 @@ class ConfirmationScreen extends Component<IProps, IState> {
     let { user, navigation } = this.props;
     const password = navigation.getParam('password', 'no-password');
 
-    Auth.confirmSignUp(user.phone_number, code)
+    Auth.confirmSignUp(user.id, code)
       .then(res => {
         console.log(res);
-        Auth.signIn(user.phone_number, password)
+        Auth.signIn(user.id, password)
           .then(() => {
             console.log('sign succesfully');
             createUser(user)

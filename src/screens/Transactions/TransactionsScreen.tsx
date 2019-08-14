@@ -27,7 +27,7 @@ import {
   updateUserDB
 } from '../../client/index';
 import {
-  CreateTransactionsInput,
+  CreateTransactionInput,
   Transaction_status,
   Transaction_type
 } from '../../API';
@@ -97,10 +97,10 @@ class TransactionsScreen extends Component<IProps, IState> {
     this.setState({ loading: true });
     const { phone_number } = this.state;
     const phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-    this.props.user.phone_number !== phoneNumber
+    this.props.user.id !== phoneNumber
       ? getUser(phoneNumber).then((userTable: any) => {
           const transactionUser = userTable.data.getUser;
-          this.setState({ transactionUser });
+          this.setState({ transactionUser, loading: false });
           !transactionUser &&
             this.setState({
               loading: false,
@@ -124,45 +124,70 @@ class TransactionsScreen extends Component<IProps, IState> {
     this.setState({ loading: true });
 
     if (user.cmus >= cmus) {
-      const transaction: CreateTransactionsInput = {
-        createAt: new Date().toISOString(),
+      const transaction: CreateTransactionInput = {
+        createdAt: new Date().toISOString(),
         cmus: cmus.toFixed(1),
         status: Transaction_status.PENDING,
-        transactionsFromId: user.id,
-        transactionsToId: transactionUser.id,
+        fromId: user.id,
+        fromNickName: user.nickname,
+        toId: transactionUser.id,
+        toNickname: transactionUser.nickname,
         type: Transaction_type.USER_TRANSACTION
       };
-      createTransaction(transaction)
-        .then((res: any) => {
-          updateTransaction({
-            id: res.data.createTransactions.id,
-            status: Transaction_status.SUCCESFUL
-          })
-            .then(() => {
-              const userCMUS = Number((user.cmus - cmus).toFixed(1));
-              const userTransactionCMUS = Number(
-                (transactionUser.cmus + cmus).toFixed(1)
-              );
-              console.log(user.id);
-              updateUserDB({ id: user.id, cmus: userCMUS })
-                .catch(res => console.log(res))
-                .then((data: any) => {
+      getUser(user.id).then((newUserData: any) => {
+        const lastestUser = newUserData.data.getUser;
+        getUser(transactionUser.id).then((newTransactionalUserData: any) => {
+          const latestTransactionalUser = newTransactionalUserData.data.getUser;
+          createTransaction(transaction)
+            .then((transactionResponse: any) => {
+              const transactionId =
+                transactionResponse.data.createTransaction.id;
+              updateTransaction({
+                id: transactionId,
+                status: Transaction_status.SUCCESFUL
+              })
+                .then(() => {
+                  const userCMUS = Number((lastestUser.cmus - cmus).toFixed(1));
+                  const userTransactionCMUS = Number(
+                    (latestTransactionalUser.cmus + cmus).toFixed(1)
+                  );
                   updateUserDB({
-                    id: transactionUser.id,
-                    cmus: Number(userTransactionCMUS)
-                  }).catch(res => console.log(res));
-                  updateUser(data.data.updateUser);
-                  navigation.navigate(ROUTES.ConfirmationTransactionScreen, {
-                    transactionUser: JSON.stringify(transactionUser),
-                    transaction: JSON.stringify(transaction)
-                  });
-                });
-              console.log('SUCCESFUL');
-              this.setState({ loading: false });
+                    id: lastestUser.id,
+                    cmus: userCMUS,
+                    transactions: [...lastestUser.transactions, transactionId]
+                  })
+                    .catch(res => console.log(res))
+                    .then((data: any) => {
+                      console.log(data, latestTransactionalUser);
+                      updateUserDB({
+                        id: latestTransactionalUser.id,
+                        cmus: Number(userTransactionCMUS),
+                        transactions: [
+                          ...latestTransactionalUser.transactions,
+                          transactionId
+                        ]
+                      })
+                        .catch(res => console.log(res))
+                        .then(() => {
+                          console.log('im running');
+                          updateUser(data.data.updateUser);
+                          navigation.navigate(
+                            ROUTES.ConfirmationTransactionScreen,
+                            {
+                              transactionUser: JSON.stringify(transactionUser),
+                              transaction: JSON.stringify(transaction)
+                            }
+                          );
+                          this.setState({ loading: false });
+                          console.log('SUCCESFUL');
+                        });
+                    });
+                })
+                .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
+        });
+      });
     } else {
       this.setState({
         snackIsVisible: true,
@@ -191,7 +216,7 @@ class TransactionsScreen extends Component<IProps, IState> {
           <Text style={styles.answer}>{transactionUser.nickname}</Text>
           <Text style={styles.label}>Número del cashie</Text>
           <Text style={styles.answer}>
-            {formatPhoneNumber(transactionUser.phone_number)}
+            {formatPhoneNumber(transactionUser.id)}
           </Text>
           <Input
             keyboardType='numeric'

@@ -13,6 +13,7 @@ export const theme = {
     grey: '#adadad',
     primary: '#88B91E',
     secondary: '#0F253C',
+    softBlue: '#1F3A54',
     transparent: 'rgba(20, 20, 20, 0)',
     white: '#FFF',
     whiteBackground: '#EAEAEA'
@@ -36,6 +37,12 @@ export const styles = StyleSheet.create({
     height: hp('100%'),
     width: wp('100%')
   },
+  blueCard: {
+    backgroundColor: theme.colors.softBlue,
+    borderRadius: wp('2%'),
+    marginTop: hp('1%'),
+    marginBottom: hp('1%')
+  },
   greenButton: {
     borderRadius: 23,
     height: hp('8%'),
@@ -48,6 +55,12 @@ export const styles = StyleSheet.create({
     borderRadius: 23,
     height: hp('8%'),
     width: wp('80%'),
+    marginTop: hp('1%'),
+    marginBottom: hp('1%')
+  },
+  greenCard: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: wp('2%'),
     marginTop: hp('1%'),
     marginBottom: hp('1%')
   },

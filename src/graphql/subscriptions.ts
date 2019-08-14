@@ -3,112 +3,88 @@
 
 export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
-    id
-    type
-    nickname
-    phone_number
-    email
     cmus
+    createdAt
+    email
+    id
+    nickname
+    transactions
+    type
+    updatedAt
   }
 }
 `;
 export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
-    id
-    type
-    nickname
-    phone_number
-    email
     cmus
+    createdAt
+    email
+    id
+    nickname
+    transactions
+    type
+    updatedAt
   }
 }
 `;
 export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
-    id
-    type
-    nickname
-    phone_number
+    cmus
+    createdAt
     email
-    cmus
+    id
+    nickname
+    transactions
+    type
+    updatedAt
   }
 }
 `;
-export const onCreateTransactions = `subscription OnCreateTransactions {
-  onCreateTransactions {
-    id
-    createAt
-    from {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
-    to {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
+export const onCreateTransaction = `subscription OnCreateTransaction {
+  onCreateTransaction {
     cmus
-    status
+    createdAt
+    fromId
+    fromNickName
+    id
+    tags
+    toId
+    toNickname
     type
+    status
+    updatedAt
   }
 }
 `;
-export const onUpdateTransactions = `subscription OnUpdateTransactions {
-  onUpdateTransactions {
-    id
-    createAt
-    from {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
-    to {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
+export const onUpdateTransaction = `subscription OnUpdateTransaction {
+  onUpdateTransaction {
     cmus
-    status
+    createdAt
+    fromId
+    fromNickName
+    id
+    tags
+    toId
+    toNickname
     type
+    status
+    updatedAt
   }
 }
 `;
-export const onDeleteTransactions = `subscription OnDeleteTransactions {
-  onDeleteTransactions {
-    id
-    createAt
-    from {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
-    to {
-      id
-      type
-      nickname
-      phone_number
-      email
-      cmus
-    }
+export const onDeleteTransaction = `subscription OnDeleteTransaction {
+  onDeleteTransaction {
     cmus
-    status
+    createdAt
+    fromId
+    fromNickName
+    id
+    tags
+    toId
+    toNickname
     type
+    status
+    updatedAt
   }
 }
 `;

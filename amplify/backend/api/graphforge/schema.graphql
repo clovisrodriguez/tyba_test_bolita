@@ -1,0 +1,41 @@
+type User @model {
+  cmus: Float!
+  createdAt: AWSDateTime
+  email: String!
+  id: ID!
+  nickname: String!
+  transactions: [ID]!
+  type: User_type
+  updatedAt: AWSDateTime
+}
+
+type Transaction @model {
+  cmus: Float!
+  createdAt: AWSDateTime
+  fromId: ID!
+  fromNickName: String
+  id: ID!
+  tags: String
+  toId: ID!
+  toNickname: String
+  type: Transaction_type!
+  status: Transaction_status!
+  updatedAt: AWSDateTime
+}
+
+enum Transaction_type {
+  CASH_IN
+  CASH_OUT
+  USER_TRANSACTION
+}
+
+enum Transaction_status {
+  SUCCESFUL
+  PENDING
+  FAILED
+}
+
+enum User_type {
+  REGULAR_USER
+  BUSINESS_USER
+}

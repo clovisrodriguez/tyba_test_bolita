@@ -1,9 +1,9 @@
 {
-    "AppSyncApiName": "cmugraph",
+    "AppSyncApiName": "graphforge",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "AuthCognitoUserPoolId": {
         "Fn::GetAtt": [
-            "authuserapp8971b3ce",
+            "authrncforgec893ace3",
             "Outputs.UserPoolId"
         ]
     }

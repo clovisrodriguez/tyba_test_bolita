@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { theme } from '../theme/index';
 import { getUser, onUpdateTransactionSubscription } from '../client/index';
-import { faPlayCircle, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faQrcode, faUser, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import updateUser from '../store/actions/storeUser';
 import { connect } from 'react-redux';
 import { UpdateUserInput } from '../API';
@@ -22,10 +22,11 @@ interface IProps {
 
 class NavigationComponent extends Component<IProps, any> {
   render() {
-    const { user } = this.props;
+    const { user, navigation } = this.props;
+
     onUpdateTransactionSubscription.subscribe({
       next: transaction => {
-        const userId = transaction.value.data.onUpdateTransactions.to.id;
+        const userId = transaction.value.data.onUpdateTransaction.toId;
         if (Object.keys(user).length > 0) {
           userId === user.id &&
             getUser(user.id).then((userTable: any) => {
@@ -34,34 +35,40 @@ class NavigationComponent extends Component<IProps, any> {
         }
       }
     });
+
     return (
       <View style={navigationStyles.container}>
         <Button
-          style={{
-            width: wp('18%'),
-            height: hp('8%'),
-            margin: 0
-          }}
-          onPress={() => this.props.navigation.navigate(ROUTES.QRScreen)}
+          buttonStyle={navigationStyles.buttonStyle}
+          onPress={() => navigation.navigate(ROUTES.TransactionsScreen)}
           icon={
             <FontAwesomeIcon
-              icon={faQrcode}
-              size={hp('5%')}
+              icon={faPaperPlane}
+              size={hp('4%')}
               color={theme.colors.secondary}
             />
           }
         />
         <Button
-          style={{
-            width: wp('20%'),
-            height: hp('8%'),
-            margin: 0
-          }}
-          onPress={() => this.props.navigation.navigate(ROUTES.Dashboard)}
+          buttonStyle={navigationStyles.buttonStyle}
+          onPress={() => navigation.navigate(ROUTES.Dashboard)}
           icon={
             <FontAwesomeIcon
-              icon={faPlayCircle}
-              size={hp('5%')}
+              icon={faQrcode}
+              size={hp('4%')}
+              color={theme.colors.secondary}
+            />
+          }
+        />
+        <Button
+          buttonStyle={navigationStyles.buttonStyle}
+          onPress={() =>
+            navigation.navigate(ROUTES.TransactionsRecordScreen)
+          }
+          icon={
+            <FontAwesomeIcon
+              icon={faUser}
+              size={hp('4%')}
               color={theme.colors.secondary}
             />
           }
@@ -78,6 +85,11 @@ const navigationStyles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     padding: 0
+  },
+  buttonStyle: {
+    width: wp('20%'),
+    height: hp('7%'),
+    margin: 0
   }
 });
 

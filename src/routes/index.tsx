@@ -1,20 +1,22 @@
 import React from 'react';
-import NavigationComponent from '../components/Navigation';
 import {
   createAppContainer,
   createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator
 } from 'react-navigation';
-import HomeScreen from '../screens/Auth/HomeScreen';
-import LoginScreen from '../screens/Auth/LoginScreen';
-import SignupScreen from '../screens/Auth/SignupScreen';
 import ConfirmationScreen from '../screens/Auth/ConfirmationScreen';
-import Dashboard from '../screens/Dashboard';
-import QRScreen from '../screens/Transactions/QRScreen';
-import TransactionsScreen from '../screens/Transactions/TransactionsScreen';
 import ConfirmationTransactionScreen from '../screens/Transactions/ConfirmationScreen';
+import Dashboard from '../screens/Dashboard';
+import LoginScreen from '../screens/Auth/LoginScreen';
+import HomeScreen from '../screens/Auth/HomeScreen';
 import PasswordRecoveryScreen from '../screens/Auth/PasswordRecoveryScreen';
+import QRScreen from '../screens/Transactions/QRScreen';
+import SignupScreen from '../screens/Auth/SignupScreen';
+import TransactionsRecordScreen from '../screens/Profile/TransactionsRecord';
+import TransactionsScreen from '../screens/Transactions/TransactionsScreen';
+
+import NavigationComponent from '../components/Navigation';
 
 export enum ROUTES {
   ConfirmationScreen = 'ConfirmationScreen',
@@ -25,6 +27,7 @@ export enum ROUTES {
   QRScreen = 'QRScreen',
   SignupScreen = 'SignupScreen',
   PasswordRecoveryScreen = 'PasswordRecoveryScreen',
+  TransactionsRecordScreen = 'TransactionsRecordScreen',
   TransactionsScreen = 'TransactionsScreen'
 }
 
@@ -79,6 +82,19 @@ const AppStack = createBottomTabNavigator({
   }
 });
 
+const ProfileStack = createBottomTabNavigator({
+  [ROUTES.TransactionsRecordScreen]: {
+    screen: TransactionsRecordScreen,
+    navigationOptions: {
+      title: [ROUTES.TransactionsRecordScreen],
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
+    }
+  }
+});
+
 const TransactionsStack = createBottomTabNavigator({
   [ROUTES.QRScreen]: {
     screen: QRScreen,
@@ -117,6 +133,7 @@ const AppContainer = createAppContainer(
     {
       Auth: AuthStack,
       App: AppStack,
+      Profile: ProfileStack,
       Transactions: TransactionsStack
     },
     {

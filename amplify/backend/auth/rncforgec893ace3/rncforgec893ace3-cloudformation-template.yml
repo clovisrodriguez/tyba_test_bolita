@@ -180,6 +180,21 @@ Resources:
           Required: true
           Mutable: true
         
+        -
+          Name: name
+          Required: true
+          Mutable: true
+        
+        -
+          Name: phone_number
+          Required: true
+          Mutable: true
+        
+        -
+          Name: updated_at
+          Required: true
+          Mutable: true
+        
       
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
@@ -209,7 +224,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: userap8971b3ce_app_clientWeb
+      ClientName: rncforc893ace3_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -341,7 +356,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'userapp8971b3ce_identitypool_8971b3ce', !Join ['',['userapp8971b3ce_identitypool_8971b3ce', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'rncforgec893ace3_identitypool_c893ace3', !Join ['',['rncforgec893ace3_identitypool_c893ace3', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

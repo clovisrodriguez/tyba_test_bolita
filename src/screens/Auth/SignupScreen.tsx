@@ -120,21 +120,24 @@ class LoginScreen extends Component<IProps, IState> {
       password: password,
       attributes: {
         email: email,
-        name: name
+        name: name,
+        updated_at: new Date().getTime().toString()
       }
     })
       .then(() => {
         const user: CreateUserInput = {
-          id: phoneNumber,
-          type: User_type.REGULAR_USER,
-          nickname: name,
-          phone_number: phoneNumber,
+          cmus: 0,
           email: email,
-          cmus: 0
+          id: phoneNumber,
+          nickname: name,
+          transactions: [],
+          type: User_type.REGULAR_USER
         };
         updateUser(user);
         this.setState({ loading: false });
-        this.props.navigation.navigate(ROUTES.ConfirmationScreen, { password });
+        this.props.navigation.navigate(ROUTES.ConfirmationScreen, {
+          password
+        });
       })
       .catch(err => {
         console.log('error sign!:', err);

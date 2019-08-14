@@ -87,7 +87,7 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
             <Text style={styles.answer}>{transactionUser.nickname}</Text>
             <Text style={styles.label}>Número del cashie</Text>
             <Text style={styles.answer}>
-              {formatPhoneNumber(transactionUser.phone_number)}
+              {formatPhoneNumber(transactionUser.id)}
             </Text>
             <Text style={styles.label}>CMUS</Text>
             <Text style={styles.answer}>{transaction.cmus}</Text>

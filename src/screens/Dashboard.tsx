@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import { CreateUserInput } from '../API';
 import updateUser from '../store/actions/storeUser';
 import AnimatedLoader from 'react-native-animated-loader';
+import { faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { BlurView } from 'expo-blur';
 import * as WebBrowser from 'expo-web-browser';
 import {
@@ -49,7 +51,7 @@ class Dashboard extends Component<IProps, IState> {
   state = {};
 
   render() {
-    const { user } = this.props;
+    const { user, navigation } = this.props;
     const validUser = user ? Object.keys(user).length > 0 : false;
     let loading = false;
 
@@ -98,23 +100,27 @@ class Dashboard extends Component<IProps, IState> {
           </BlurView>
           <Button
             title='COMPRAR CMUS'
-            buttonStyle={styles.greenButtonOutline}
+            buttonStyle={styles.greenButton}
             type='outline'
+            titleStyle={{ color: theme.colors.secondary }}
             onPress={() => WebBrowser.openBrowserAsync(url)}
           />
           <Button
-            buttonStyle={styles.greenButton}
-            title='SALIR'
-            titleStyle={{ color: theme.colors.secondary }}
-            onPress={() =>
-              Auth.signOut({ global: true })
-                .then(() => {
-                  this.props.navigation.navigate(ROUTES.HomeScreen);
-                  updateUser({});
-                })
-                .catch(err => {
-                  console.log(err);
-                })
+            title='PAGAR / ENVIAR DINERO'
+            buttonStyle={styles.greenButtonOutline}
+            type='outline'
+            titleStyle={{ color: theme.colors.primary }}
+            onPress={() => navigation.navigate(ROUTES.TransactionsScreen)}
+          />
+          <Button
+            buttonStyle={pageStyles.circleButton}
+            onPress={() => navigation.navigate(ROUTES.QRScreen)}
+            icon={
+              <FontAwesomeIcon
+                icon={faQrcode}
+                size={hp('5%')}
+                color={theme.colors.secondary}
+              />
             }
           />
         </View>
@@ -132,11 +138,18 @@ const pageStyles = StyleSheet.create({
     height: hp('25%'),
     padding: hp('3%'),
     paddingTop: hp('5%'),
-    marginBottom: hp('30%'),
+    marginBottom: hp('24%'),
     marginTop: hp('5%'),
     marginRight: hp('25%'),
     borderRadius: hp('25%') / 2,
     backgroundColor: theme.colors.secondary
+  },
+  circleButton: {
+    width: hp('10%'),
+    height: hp('10%'),
+    backgroundColor: theme.colors.primary,
+    borderRadius: hp('5%'),
+    marginTop: hp('3%')
   },
   cmu_number: {
     color: theme.colors.white,

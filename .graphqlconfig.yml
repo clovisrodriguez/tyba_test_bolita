@@ -1,5 +1,5 @@
 projects:
-  cmugraph:
+  graphforge:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts
@@ -10,3 +10,4 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/API.ts
         docsFilePath: src/graphql
+        region: us-east-2

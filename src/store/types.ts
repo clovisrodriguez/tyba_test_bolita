@@ -1,1 +1,2 @@
 export const UPDATE_USER = '@@USER/UPDATE'
+export const UPDATE_TRANSACTIONS = '@@TRANSACTIONS/UPDATE';
