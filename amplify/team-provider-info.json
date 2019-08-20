@@ -1,18 +1,18 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "rncforge-dev-20190812184930-authRole",
-            "UnauthRoleArn": "arn:aws:iam::036917629170:role/rncforge-dev-20190812184930-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::036917629170:role/rncforge-dev-20190812184930-authRole",
+            "AuthRoleName": "rncclient-dev-20190814215354-authRole",
+            "UnauthRoleArn": "arn:aws:iam::036917629170:role/rncclient-dev-20190814215354-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::036917629170:role/rncclient-dev-20190814215354-authRole",
             "Region": "us-east-2",
-            "DeploymentBucketName": "rncforge-dev-20190812184930-deployment",
-            "UnauthRoleName": "rncforge-dev-20190812184930-unauthRole",
-            "StackName": "rncforge-dev-20190812184930",
-            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/rncforge-dev-20190812184930/dd67c5f0-bd5b-11e9-974e-0ab95d3a5528"
+            "DeploymentBucketName": "rncclient-dev-20190814215354-deployment",
+            "UnauthRoleName": "rncclient-dev-20190814215354-unauthRole",
+            "StackName": "rncclient-dev-20190814215354",
+            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/rncclient-dev-20190814215354/f4613b80-bf07-11e9-b57a-069bf518e2a4"
         },
         "categories": {
             "auth": {
-                "rncforgec893ace3": {}
+                "rncclient42ee0757": {}
             }
         }
     }

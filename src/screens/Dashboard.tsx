@@ -71,9 +71,7 @@ class Dashboard extends Component<IProps, IState> {
         .catch(err => console.log(err));
     }
 
-    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${
-      user.id
-    }&nickname=${user.nickname}&email=${user.email}`;
+    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${user.id}`;
 
     return (
       <LinearGradient
@@ -103,7 +101,9 @@ class Dashboard extends Component<IProps, IState> {
             buttonStyle={styles.greenButton}
             type='outline'
             titleStyle={{ color: theme.colors.secondary }}
-            onPress={() => WebBrowser.openBrowserAsync(url)}
+            onPress={() => {
+              WebBrowser.openBrowserAsync(url);
+            }}
           />
           <Button
             title='PAGAR / ENVIAR DINERO'

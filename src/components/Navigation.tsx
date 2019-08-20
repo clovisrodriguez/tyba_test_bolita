@@ -63,7 +63,7 @@ class NavigationComponent extends Component<IProps, any> {
         <Button
           buttonStyle={navigationStyles.buttonStyle}
           onPress={() =>
-            navigation.navigate(ROUTES.TransactionsRecordScreen)
+            navigation.navigate(ROUTES.ProfileScreen)
           }
           icon={
             <FontAwesomeIcon

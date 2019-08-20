@@ -114,14 +114,14 @@ class LoginScreen extends Component<IProps, IState> {
       loading: true
     });
     const { email, name, password, phone_number } = this.state;
+    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
     let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
     Auth.signUp({
       username: phoneNumber,
       password: password,
       attributes: {
-        email: email,
-        name: name,
-        updated_at: new Date().getTime().toString()
+        name,
+        email: mail
       }
     })
       .then(() => {

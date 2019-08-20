@@ -116,7 +116,13 @@ class TransactionRecordScreen extends Component<IProps, IState> {
             transaction.toId === user.id || transaction.fromId === user.id
         );
 
-        updateTransactions(userTransactions);
+        const userTransactionsByDate = _.orderBy(
+          userTransactions,
+          (transaction: UpdateTransactionInput) =>
+            new Date(transaction.createdAt).getTime()
+        , 'desc');
+
+        updateTransactions(userTransactionsByDate);
         this.setState({ loading: false });
       });
     });
@@ -164,29 +170,6 @@ class TransactionRecordScreen extends Component<IProps, IState> {
                 Aun no tienes transacciones :(, ve a comprar ya!!
               </Text>
             )}
-            <Button
-              style={{ marginTop: hp('20%') }}
-              buttonStyle={styles.greenButton}
-              title='VOLVER AL INICIO'
-              titleStyle={{ color: theme.colors.secondary }}
-              onPress={() => navigation.navigate(ROUTES.Dashboard)}
-            />
-            <Button
-              buttonStyle={styles.greenButtonOutline}
-              type='outline'
-              title='SALIR'
-              titleStyle={{ color: theme.colors.primary }}
-              onPress={() =>
-                Auth.signOut({ global: true })
-                  .then(() => {
-                    navigation.navigate(ROUTES.HomeScreen);
-                    updateUser({});
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  })
-              }
-            />
           </View>
         </View>
         <Rectangle w={wp('28%')} h={hp('34%')} t={hp('70%')} />

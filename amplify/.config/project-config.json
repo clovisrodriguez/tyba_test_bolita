@@ -1,11 +1,11 @@
 {
-    "projectName": "RNC_forge",
+    "projectName": "rnc_client",
     "version": "2.0",
     "frontend": "javascript",
     "javascript": {
         "framework": "react-native",
         "config": {
-            "SourceDir": "",
+            "SourceDir": "/",
             "DistributionDir": "/",
             "BuildCommand": "yarn build",
             "StartCommand": "yarn start"

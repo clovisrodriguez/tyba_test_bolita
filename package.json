@@ -20,7 +20,7 @@
     "expo-barcode-scanner": "~5.0.1",
     "expo-blur": "~5.0.1",
     "expo-linear-gradient": "~5.0.1",
-    "expo-web-browser": "~5.0.2",
+    "expo-web-browser": "^6.0.0",
     "graphql-tag": "^2.10.1",
     "jest": "^24.8.0",
     "lodash": "^4.17.14",

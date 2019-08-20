@@ -10,6 +10,7 @@ import ConfirmationTransactionScreen from '../screens/Transactions/ConfirmationS
 import Dashboard from '../screens/Dashboard';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import HomeScreen from '../screens/Auth/HomeScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 import PasswordRecoveryScreen from '../screens/Auth/PasswordRecoveryScreen';
 import QRScreen from '../screens/Transactions/QRScreen';
 import SignupScreen from '../screens/Auth/SignupScreen';
@@ -25,8 +26,9 @@ export enum ROUTES {
   HomeScreen = 'HomeScreen',
   LoginScreen = 'LoginScreen',
   QRScreen = 'QRScreen',
-  SignupScreen = 'SignupScreen',
   PasswordRecoveryScreen = 'PasswordRecoveryScreen',
+  ProfileScreen = 'ProfileScreen',
+  SignupScreen = 'SignupScreen',
   TransactionsRecordScreen = 'TransactionsRecordScreen',
   TransactionsScreen = 'TransactionsScreen'
 }
@@ -83,6 +85,16 @@ const AppStack = createBottomTabNavigator({
 });
 
 const ProfileStack = createBottomTabNavigator({
+  [ROUTES.ProfileScreen]: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      title: [ROUTES.ProfileScreen],
+      header: null,
+      tabBarComponent: ({ navigation }) => (
+        <NavigationComponent navigation={navigation} />
+      )
+    }
+  },
   [ROUTES.TransactionsRecordScreen]: {
     screen: TransactionsRecordScreen,
     navigationOptions: {
