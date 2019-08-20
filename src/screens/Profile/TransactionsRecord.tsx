@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
-import { ROUTES } from '../../routes/index';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import {
@@ -19,7 +18,7 @@ import {
 } from '../../API';
 import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
-import { Button, ListItem } from 'react-native-elements';
+import {  ListItem } from 'react-native-elements';
 import _ from 'lodash';
 import {
   widthPercentageToDP as wp,
@@ -28,7 +27,6 @@ import {
 import { getTransactions, getUser } from '../../client/index';
 import updateTransactions from '../../store/actions/storeTransactions';
 import updateUser from '../../store/actions/storeUser';
-import { Auth } from 'aws-amplify';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -130,7 +128,7 @@ class TransactionRecordScreen extends Component<IProps, IState> {
 
   render() {
     const { loading } = this.state;
-    const { navigation, transactions, user } = this.props;
+    const { transactions, user } = this.props;
 
     return (
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
