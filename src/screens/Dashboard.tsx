@@ -3,7 +3,7 @@ import { StyleSheet, StyleProp, ViewStyle, Text, View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../theme/index';
 import { getUser } from '../client/index';
-import { Auth } from 'aws-amplify';
+import { Auth, Analytics } from 'aws-amplify';
 import { Button } from 'react-native-elements';
 import { ROUTES } from '../routes/index';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -50,6 +50,10 @@ const Rectangle = props => {
 class Dashboard extends Component<IProps, IState> {
   state = {};
 
+  componentDidMount() {
+    Analytics.record({ name: 'visit dashboard' });
+  }
+
   render() {
     const { user, navigation } = this.props;
     const validUser = user ? Object.keys(user).length > 0 : false;
@@ -71,7 +75,9 @@ class Dashboard extends Component<IProps, IState> {
         .catch(err => console.log(err));
     }
 
-    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${user.id}`;
+    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${
+      user.id
+    }`;
 
     return (
       <LinearGradient
@@ -96,7 +102,9 @@ class Dashboard extends Component<IProps, IState> {
               ¡Hola {user.nickname}! Este es tu saldo disponible
             </Text>
           </BlurView>
-          <Button
+
+          {/* FOR NOW ALL BUY CMUS ARE GOING TO BE MANUAL */
+          /* <Button
             title='COMPRAR CMUS'
             buttonStyle={styles.greenButton}
             type='outline'
@@ -104,17 +112,25 @@ class Dashboard extends Component<IProps, IState> {
             onPress={() => {
               WebBrowser.openBrowserAsync(url);
             }}
-          />
+          /> */}
           <Button
             title='PAGAR / ENVIAR DINERO'
             buttonStyle={styles.greenButtonOutline}
             type='outline'
             titleStyle={{ color: theme.colors.primary }}
-            onPress={() => navigation.navigate(ROUTES.TransactionsScreen)}
+            onPress={() => {
+              Analytics.record({ name: 'Send Money Dashboard Button' });
+              navigation.navigate(ROUTES.TransactionsScreen);
+            }}
           />
           <Button
             buttonStyle={pageStyles.circleButton}
-            onPress={() => navigation.navigate(ROUTES.QRScreen)}
+            onPress={() => {
+              Analytics.record({
+                name: 'QR Dashboard Button'
+              });
+              navigation.navigate(ROUTES.QRScreen);
+            }}
             icon={
               <FontAwesomeIcon
                 icon={faQrcode}

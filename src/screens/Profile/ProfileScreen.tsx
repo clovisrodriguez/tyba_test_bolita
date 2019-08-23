@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  ViewStyle,
-  StyleProp,
-  Text,
-  View,
-} from 'react-native';
+import { StyleSheet, ViewStyle, StyleProp, Text, View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
 import { ROUTES } from '../../routes/index';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
-import {
-  CreateUserInput,
-  UpdateTransactionInput,
-} from '../../API';
+import { CreateUserInput, UpdateTransactionInput } from '../../API';
 import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
 import { Button } from 'react-native-elements';
@@ -24,7 +15,7 @@ import {
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import updateUser from '../../store/actions/storeUser';
-import { Auth } from 'aws-amplify';
+import { Auth, Analytics } from 'aws-amplify';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -68,9 +59,7 @@ class ProfileScreen extends Component<IProps, IState> {
     const { navigation, user } = this.props;
 
     return (
-      <LinearGradient
-        colors={theme.colors.darkBackground}
-        style={{ flex: 1 }}>
+      <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
         <AnimatedLoader
           visible={loading}
           overlayColor='rgba(164,220,34,0.75)'
@@ -104,7 +93,12 @@ class ProfileScreen extends Component<IProps, IState> {
               buttonStyle={styles.greenButton}
               title='VER HISTORIAL'
               titleStyle={{ color: theme.colors.secondary }}
-              onPress={() => navigation.navigate(ROUTES.TransactionsRecordScreen)}
+              onPress={() => {
+                 Analytics.record({
+                   name: 'Transaction Record Button'
+                 });
+                navigation.navigate(ROUTES.TransactionsRecordScreen);
+              }}
             />
             <Button
               buttonStyle={styles.greenButtonOutline}

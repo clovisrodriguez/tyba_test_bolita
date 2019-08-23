@@ -1,0 +1,20 @@
+{
+    "appName": "rncanalytics",
+    "roleName": "pinpointLambdaRole7cdccd8e",
+    "cloudWatchPolicyName": "cloudWatchPolicy7cdccd8e",
+    "pinpointPolicyName": "pinpointPolicy7cdccd8e",
+    "authPolicyName": "pinpoint_amplify_7cdccd8e",
+    "unauthPolicyName": "pinpoint_amplify_7cdccd8e",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

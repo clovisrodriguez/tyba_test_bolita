@@ -1,6 +1,6 @@
 {
     "identityPoolName": "rncclient42ee0757_identitypool_42ee0757",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "lambdaLogPolicy": "rnccli_42ee0757_lambda_log_policy",
     "openIdLambdaRoleName": "rnccli_42ee0757_openid_lambda_role",
     "openIdRolePolicy": "rnccli_42ee0757_openid_pass_role_policy",

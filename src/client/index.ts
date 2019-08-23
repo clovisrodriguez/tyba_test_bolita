@@ -7,7 +7,9 @@ import {
   CreateUserInput,
   CreateTransactionInput,
   UpdateTransactionInput,
-  UpdateUserInput
+  UpdateUserInput,
+  ListUsersQueryVariables,
+  ListTransactionsQueryVariables
 } from '../API';
 
 export const createTransaction = async (transaction: CreateTransactionInput) =>
@@ -18,11 +20,11 @@ export const createTransaction = async (transaction: CreateTransactionInput) =>
 export const createUser = async (user: CreateUserInput) =>
   await API.graphql(graphqlOperation(mutations.createUser, { input: user }));
 
-export const getAllUser = async () =>
-  await API.graphql(graphqlOperation(queries.listUsers));
+export const getAllUser = async (variables: ListUsersQueryVariables) =>
+  await API.graphql(graphqlOperation(queries.listUsers, variables));
 
-export const getTransactions = async () => 
-  await API.graphql(graphqlOperation(queries.listTransactions))
+export const getTransactions = async (variables: ListTransactionsQueryVariables) => 
+  await API.graphql(graphqlOperation(queries.listTransactions, variables))
 
 export const getUser = async (id: String) =>
   await API.graphql(graphqlOperation(queries.getUser, { id }));

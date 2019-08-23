@@ -18,7 +18,7 @@ import {
 } from '../../API';
 import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
-import {  ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import _ from 'lodash';
 import {
   widthPercentageToDP as wp,
@@ -60,6 +60,7 @@ class TransactionRecordScreen extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.renderTransaction = this.renderTransaction.bind(this);
+    this.getProps = this.getProps.bind(this);
   }
   state = {
     loading: true
@@ -103,27 +104,45 @@ class TransactionRecordScreen extends Component<IProps, IState> {
 
   keyExtractor = (item, index) => index.toString();
 
-  componentDidMount() {
+  async getProps() {
     const { user } = this.props;
-    getUser(user.id).then((newUser: any) => {
-      updateUser(newUser.data.getUser);
-      getTransactions().then(transactionList => {
-        const userTransactions = _.filter(
-          _.get(transactionList, 'data.listTransactions.items'),
-          (transaction: UpdateTransactionInput) =>
-            transaction.toId === user.id || transaction.fromId === user.id
-        );
+    const newUser = _.get(await getUser(user.id), 'data.getUser', {});
+    const transactionListTo = _.get(
+      await getTransactions({
+        filter: {
+          toId: {
+            eq: newUser.id
+          }
+        }
+      }),
+      'data.listTransactions.items'
+    );
 
-        const userTransactionsByDate = _.orderBy(
-          userTransactions,
-          (transaction: UpdateTransactionInput) =>
-            new Date(transaction.createdAt).getTime()
-        , 'desc');
+    const transactionListFrom = _.get(
+      await getTransactions({
+        filter: {
+          fromId: {
+            eq: newUser.id
+          }
+        }
+      }),
+      'data.listTransactions.items'
+    );
 
-        updateTransactions(userTransactionsByDate);
-        this.setState({ loading: false });
-      });
-    });
+    const userTransactionsByDate = _.orderBy(
+      [...transactionListFrom, ...transactionListTo],
+      (transaction: UpdateTransactionInput) =>
+        new Date(transaction.createdAt).getTime(),
+      'desc'
+    );
+
+    updateUser(newUser);
+    updateTransactions(userTransactionsByDate);
+    this.setState({ loading: false });
+  }
+
+  componentDidMount() {
+    this.getProps();
   }
 
   render() {

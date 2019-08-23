@@ -12,8 +12,8 @@
     "allowJs": false,
     "sourceMap": true,
     "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "noUnusedParameters": false,
+    "noUnusedLocals": false
   },
   "types": ["react", "react-native", "jest", "react-redux"],
   "exclude": ["android", "App.js", "ios", "build", "node_modules"],
