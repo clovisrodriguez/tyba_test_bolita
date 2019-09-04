@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.4.0",
+    "version": "0.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.qatro20company.cashmeup",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.qatro20company.cashmeup",
+      "versionCode": 2
     },
     "description": "First test environment of Cash Me Up, please anything you notices that is something it should fix you can write to me to clovis.rodriguez@cashmeup.co"
   }
