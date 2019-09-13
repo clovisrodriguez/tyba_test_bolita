@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Linking } from 'react-native';
 import { ROUTES } from '../routes/index';
 import { NavigationScreenProp } from 'react-navigation';
 import { View, StyleSheet } from 'react-native';
@@ -6,7 +7,7 @@ import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { theme } from '../theme/index';
 import { getUser, onUpdateTransactionSubscription } from '../client/index';
-import { faQrcode, faUser, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faQrcode, faUser, faPaperPlane, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import updateUser from '../store/actions/storeUser';
 import { connect } from 'react-redux';
 import { UpdateUserInput } from '../API';
@@ -68,6 +69,19 @@ class NavigationComponent extends Component<IProps, any> {
           icon={
             <FontAwesomeIcon
               icon={faUser}
+              size={hp('4%')}
+              color={theme.colors.secondary}
+            />
+          }
+        />
+        <Button
+          buttonStyle={navigationStyles.buttonStyle}
+          onPress={() =>
+            Linking.openURL('https://wa.me/573192955855')
+          }
+          icon={
+            <FontAwesomeIcon
+              icon={faQuestion}
               size={hp('4%')}
               color={theme.colors.secondary}
             />

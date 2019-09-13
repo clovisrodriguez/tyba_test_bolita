@@ -5,7 +5,7 @@ import { theme } from './theme/index';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import Amplify from 'aws-amplify';
-import awsmobile from '../aws-exports';
+import awsmobile from './aws-exports';
 
 Amplify.configure(awsmobile);
 

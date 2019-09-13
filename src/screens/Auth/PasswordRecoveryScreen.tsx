@@ -13,7 +13,6 @@ import { styles, theme } from '../../theme/index';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { validateCode, validatePassword } from '../../validators/auth';
 import { faKey, faBug } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/logo-white-shadow.png';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import { Auth } from 'aws-amplify';
@@ -134,7 +133,7 @@ class PasswordRecoveryScreen extends Component<IProps, IState> {
           textMessage={errorMessage}
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
-        <Image source={logo} style={pageStyles.logo} />
+        <Image source={require('../../../assets/logo-white-shadow.png')} style={pageStyles.logo} />
         <Text>
           Ingresa tu el código de verificación seguido de tu nueva contraseña
         </Text>

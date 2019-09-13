@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 export const theme = {
   colors: {
     darkBackground: ['#0F253C', '#010305'],
-    darkLabel: '#1414141',
+    darkLabel: '#121212',
     disabled: '#3A5403',
     disabledGrey: '#d9d9d9',
     grey: '#adadad',
@@ -102,7 +102,6 @@ export const styles = StyleSheet.create({
     height: 100
   },
   simpleButtonWhite: {
-    color: theme.colors.darkLabel,
     backgroundColor: theme.colors.transparent
   },
   whiteTitleButton: {

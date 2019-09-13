@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { formatPhoneNumber } from '../../validators/format';
 import { validatePhoneNumber } from '../../validators/auth';
 import { faMobile, faKey } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/logo-white-shadow.png';
 import { Auth } from 'aws-amplify';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
@@ -258,7 +257,7 @@ class LoginScreen extends Component<IProps, IState> {
           textMessage={errorMessage}
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
-        <Image source={logo} style={pageStyles.logo} />
+        <Image source={require('../../../assets/logo-white-shadow.png')} style={pageStyles.logo} />
         {recovery_mode && (
           <Text>Ingresa el número que esta asociado con tu cuenta</Text>
         )}
@@ -304,10 +303,10 @@ const pageStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.whiteBackground,
-    padding: wp('%5')
+    padding: wp('5%')
   },
   logo: {
-    width: 104,
+    width: 112,
     height: 112,
     marginBottom: hp('10%')
   }

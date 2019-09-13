@@ -10,37 +10,55 @@ import { Button, Image } from 'react-native-elements';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
-import background from '../../../assets/background.jpg';
-import logo from '../../../assets/logo-blanco.png';
 import { Auth } from 'aws-amplify';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { AppLoading } from 'expo';
 
-export interface IProps {
+interface IProps {
   navigation: NavigationScreenProp<any, any>;
   buttonStyle?: StyleProp<ViewStyle>;
 }
 
-class HomeScreen extends Component<IProps, object> {
+interface IState {
+  isReady: Boolean;
+}
+
+class HomeScreen extends Component<IProps, IState> {
   constructor(props) {
     super(props);
-    this._authUser();
+    this._userIsAuth = this._userIsAuth.bind(this);
+    this.state = {
+      isReady: false
+    }
   }
-
-  _authUser = async () => {
-    await Auth.currentSession().then(() =>
+  
+  _userIsAuth = async () => {
+    try {
+      await Auth.currentSession();
+      this.setState({isReady: true})
       this.props.navigation.navigate(ROUTES.Dashboard)
-    );
-  };
-
-  static navigationOptions = {
-    title: 'This is home'
+      return Promise.resolve()
+    } catch(error) {
+      return Promise.reject(error)
+    } finally {
+      this.setState({isReady: true})
+    }
   };
 
   render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._userIsAuth}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={(error) => console.log(error)}
+        />
+      )
+    }
     return (
-      <ImageBackground source={background} style={pageStyles.background}>
+      <ImageBackground source={require('../../../assets/background.jpg')} style={pageStyles.background}>
         <View style={pageStyles.container}>
-          <Image source={logo} style={pageStyles.logo} />
+          <Image source={require('../../../assets/logo-with-text.png')} style={pageStyles.logo} />
           <Button
             buttonStyle={styles.greenButton}
             title='INGRESAR'
@@ -72,7 +90,7 @@ const pageStyles = StyleSheet.create({
   },
   logo: {
     width: 180,
-    height: 193,
+    height: 215,
     marginBottom: hp('20%')
   },
   background: {

@@ -8,6 +8,7 @@ export const getUser = `query GetUser($id: ID!) {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
@@ -26,6 +27,7 @@ export const listUsers = `query ListUsers(
       email
       id
       nickname
+      status
       transactions
       type
       updatedAt

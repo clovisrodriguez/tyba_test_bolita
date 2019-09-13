@@ -5,7 +5,7 @@
     "javascript": {
         "framework": "react-native",
         "config": {
-            "SourceDir": "/",
+            "SourceDir": "src",
             "DistributionDir": "/",
             "BuildCommand": "yarn build",
             "StartCommand": "yarn start"

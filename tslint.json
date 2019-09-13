@@ -2,12 +2,14 @@
   "defaultSeverity": "error",
   "extends": ["tslint-react"],
   "rules": {
+    "jsx-no-multiline-js": false,
     "member-access": false,
     "ordered-imports": false,
     "quotemark": false,
     "no-console": false,
     "semicolon": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "jsx-alignment": false
   },
   "rulesDirectory": [],
   "jsRules": {

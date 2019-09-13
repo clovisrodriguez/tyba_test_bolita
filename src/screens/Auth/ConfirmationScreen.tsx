@@ -3,13 +3,11 @@ import { StyleSheet, Image, View, Text, Keyboard } from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
-import logo from '../../../assets/logo-white-shadow.png';
 import { Auth } from 'aws-amplify';
 import CodeInput from 'react-native-confirmation-code-field';
 import { connect } from 'react-redux';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
-import { createUser } from '../../client/index';
 import { Button } from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
@@ -22,20 +20,35 @@ interface IProps {
   password: String;
 }
 
-interface IState {}
+interface IState {
+  confirmation_number: string;
+  disableConfirmation: boolean;
+  loading: boolean;
+  snackIsVisible: boolean;
+  errorMessage: string;
+}
+
+const RESEND_CONFIRMATION_TIME = 30;
 
 class ConfirmationScreen extends Component<IProps, IState> {
-  state = {
-    confirmation_number: '',
-    loading: false,
-    snackIsVisible: false,
-    errorMessage: ''
-  };
+  constructor(props) {
+    super(props);
+    this.resendConfirmationCode = this.resendConfirmationCode.bind(this);
+    this.handlerOnFulfill = this.handlerOnFulfill.bind(this);
+
+    this.state = {
+      confirmation_number: '',
+      disableConfirmation: false,
+      loading: false,
+      snackIsVisible: false,
+      errorMessage: '',
+    };
+  }
 
   resendConfirmationCode() {
-    Auth.resendSignUp(this.props.user.id).then(res =>
-      console.log('resend confirmation', res)
-    );
+    Auth.resendSignUp(this.props.user.id)
+    this.setState({disableConfirmation: true});
+    setTimeout(() => this.setState({disableConfirmation: false}), RESEND_CONFIRMATION_TIME);
   }
 
   handlerOnFulfill(code) {
@@ -51,16 +64,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
         Auth.signIn(user.id, password)
           .then(() => {
             console.log('sign succesfully');
-            createUser(user)
-              .then(res => {
-                this.setState({ loading: false });
-                console.log('User succesfully created:', res);
-                this.props.navigation.navigate(ROUTES.Dashboard);
-              })
-              .catch(err => {
-                console.log('Something went wrong creating user :', err);
-                this.setState({ loading: false });
-              });
+            this.props.navigation.navigate(ROUTES.Dashboard);
           })
           .catch(err => {
             this.setState({ loading: false });
@@ -87,7 +91,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
           textMessage={this.state.errorMessage}
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
-        <Image source={logo} style={pageStyles.logo} />
+        <Image source={require('../../../assets/logo-white-shadow.png')} style={pageStyles.logo} />
         <Text
           style={{
             marginBottom: hp('5%'),
@@ -97,7 +101,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
           Ingresa el código de confirmación, enviado a tu celular
         </Text>
         <CodeInput
-          onFulfill={this.handlerOnFulfill.bind(this)}
+          onFulfill={this.handlerOnFulfill}
           autoFocus={true}
           codeLength={6}
           activeColor={theme.colors.primary}
@@ -107,6 +111,7 @@ class ConfirmationScreen extends Component<IProps, IState> {
         <Button
           style={{ marginBottom: hp('35%') }}
           buttonStyle={styles.greenButton}
+          disabled={this.state.disableConfirmation}
           title='ENVIAR NUEVAMENTE'
           titleStyle={{ color: theme.colors.secondary }}
           onPress={() => this.resendConfirmationCode}

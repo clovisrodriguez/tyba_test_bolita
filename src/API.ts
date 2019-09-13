@@ -7,12 +7,20 @@ export type CreateUserInput = {
   email: string,
   id?: string | null,
   nickname: string,
+  status?: User_status | null,
   transactions: Array< string | null >,
   type?: User_type | null,
   updatedAt?: string | null,
 };
 
+export enum User_status {
+  ACTIVE = "ACTIVE",
+  DELETED = "DELETED",
+}
+
+
 export enum User_type {
+  ADMIN_USER = "ADMIN_USER",
   REGULAR_USER = "REGULAR_USER",
   BUSINESS_USER = "BUSINESS_USER",
 }
@@ -24,6 +32,7 @@ export type UpdateUserInput = {
   email?: string | null,
   id: string,
   nickname?: string | null,
+  status?: User_status | null,
   transactions?: Array< string | null > | null,
   type?: User_type | null,
   updatedAt?: string | null,
@@ -85,6 +94,7 @@ export type ModelUserFilterInput = {
   email?: ModelStringFilterInput | null,
   id?: ModelIDFilterInput | null,
   nickname?: ModelStringFilterInput | null,
+  status?: ModelUser_statusFilterInput | null,
   transactions?: ModelIDFilterInput | null,
   type?: ModelUser_typeFilterInput | null,
   updatedAt?: ModelStringFilterInput | null,
@@ -131,6 +141,11 @@ export type ModelIDFilterInput = {
   beginsWith?: string | null,
 };
 
+export type ModelUser_statusFilterInput = {
+  eq?: User_status | null,
+  ne?: User_status | null,
+};
+
 export type ModelUser_typeFilterInput = {
   eq?: User_type | null,
   ne?: User_type | null,
@@ -175,6 +190,7 @@ export type CreateUserMutation = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -193,6 +209,7 @@ export type UpdateUserMutation = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -211,6 +228,7 @@ export type DeleteUserMutation = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -292,6 +310,7 @@ export type GetUserQuery = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -314,6 +333,7 @@ export type ListUsersQuery = {
       email: string,
       id: string,
       nickname: string,
+      status: User_status | null,
       transactions: Array< string | null >,
       type: User_type | null,
       updatedAt: string | null,
@@ -378,6 +398,7 @@ export type OnCreateUserSubscription = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -392,6 +413,7 @@ export type OnUpdateUserSubscription = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,
@@ -406,6 +428,7 @@ export type OnDeleteUserSubscription = {
     email: string,
     id: string,
     nickname: string,
+    status: User_status | null,
     transactions: Array< string | null >,
     type: User_type | null,
     updatedAt: string | null,

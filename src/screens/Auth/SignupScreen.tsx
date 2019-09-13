@@ -20,22 +20,38 @@ import {
   faMobile,
   faKey
 } from '@fortawesome/free-solid-svg-icons';
-import logo from '../../../assets/logo-white-shadow.png';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
 import updateUser from '../../store/actions/storeUser';
-import { CreateUserInput, User_type } from '../../API';
+import { CreateUserInput, User_type, User_status } from '../../API';
 import { Auth } from 'aws-amplify';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+import { createUser } from '../../client';
+import { any } from 'async';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
 }
 
-interface IState {}
+interface IState {
+  name: string,
+  email: string,
+  password: string,
+  repeat_password: string,
+  phone_number: string,
+  valid_name: boolean,
+  valid_email: boolean,
+  valid_password: boolean,
+  valid_match_passwords: boolean,
+  valid_phone_number: boolean,
+  loading: boolean,
+  snackIsVisible: boolean,
+  errorMessage: string,
+  [key: string]: any
+}
 
 const NAME = 'name';
 const EMAIL = 'email';
@@ -44,21 +60,26 @@ const REPEAT_PASSWORD = 'repeat_password';
 const PHONE_NUMBER = 'phone_number';
 
 class LoginScreen extends Component<IProps, IState> {
-  state = {
-    name: null,
-    email: null,
-    password: null,
-    repeat_password: null,
-    phone_number: null,
-    valid_name: true,
-    valid_email: true,
-    valid_password: true,
-    valid_match_passwords: true,
-    valid_phone_number: true,
-    loading: false,
-    snackIsVisible: false,
-    errorMessage: ''
-  };
+
+  constructor(props) {
+    super(props);
+    this.signUp = this.signUp.bind(this);
+    this.state = {
+      name: null,
+      email: null,
+      password: null,
+      repeat_password: null,
+      phone_number: null,
+      valid_name: true,
+      valid_email: true,
+      valid_password: true,
+      valid_match_passwords: true,
+      valid_phone_number: true,
+      loading: false,
+      snackIsVisible: false,
+      errorMessage: '',
+    }
+  }
 
   updateText(key, value) {
     if (key === NAME) {
@@ -109,44 +130,45 @@ class LoginScreen extends Component<IProps, IState> {
     }
   }
 
-  signUp() {
+  async signUp() {
     this.setState({
       loading: true
     });
     const { email, name, password, phone_number } = this.state;
     let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
     let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-    Auth.signUp({
-      username: phoneNumber,
-      password: password,
-      attributes: {
-        name,
-        email: mail
-      }
-    })
-      .then(() => {
-        const user: CreateUserInput = {
-          cmus: 0,
-          email: email,
-          id: phoneNumber,
-          nickname: name,
-          transactions: [],
-          type: User_type.REGULAR_USER
-        };
-        updateUser(user);
-        this.setState({ loading: false });
-        this.props.navigation.navigate(ROUTES.ConfirmationScreen, {
-          password
-        });
-      })
-      .catch(err => {
-        console.log('error sign!:', err);
-        this.setState({
-          loading: false,
-          errorMessage: err.message,
-          snackIsVisible: true
-        });
+
+    try {
+      await Auth.signUp({
+        username: phoneNumber,
+        password,
+        attributes: {
+          name,
+          email: mail
+        }
       });
+  
+      const user: CreateUserInput = {
+              cmus: 0,
+              email: email,
+              id: phoneNumber,
+              nickname: name,
+              status: User_status.ACTIVE,
+              transactions: [],
+              type: User_type.REGULAR_USER
+            };
+      
+      await createUser(user);
+      updateUser(user);
+      this.setState({ loading: false });
+      this.props.navigation.navigate(ROUTES.ConfirmationScreen);
+    } catch(error) {
+      this.setState({
+        loading: false,
+        errorMessage: error.message,
+        snackIsVisible: true
+      })
+    }
   }
 
   render() {
@@ -165,7 +187,7 @@ class LoginScreen extends Component<IProps, IState> {
           textMessage={this.state.errorMessage}
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
-        <Image source={logo} style={pageStyles.logo} />
+        <Image source={require('../../../assets/logo-white-shadow.png')} style={pageStyles.logo} />
         <Input
           textContentType='name'
           leftIcon={
@@ -300,7 +322,7 @@ class LoginScreen extends Component<IProps, IState> {
           buttonStyle={styles.greenButton}
           title='UNIRTE'
           titleStyle={styles.whiteTitleButton}
-          onPress={this.signUp.bind(this)}
+          onPress={this.signUp}
           disabled={enableSubmit(this.state)}
           disabledStyle={{ backgroundColor: theme.colors.disabledGrey }}
           disabledTitleStyle={{ color: theme.colors.grey }}

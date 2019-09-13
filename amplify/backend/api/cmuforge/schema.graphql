@@ -4,6 +4,7 @@ type User @model {
   email: String!
   id: ID!
   nickname: String!
+  status: User_status
   transactions: [ID]!
   type: User_type
   updatedAt: AWSDateTime
@@ -35,7 +36,13 @@ enum Transaction_status {
   FAILED
 }
 
+enum User_status {
+  ACTIVE
+  DELETED
+}
+
 enum User_type {
+  ADMIN_USER
   REGULAR_USER
   BUSINESS_USER
 }

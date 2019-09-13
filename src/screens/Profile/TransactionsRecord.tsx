@@ -37,6 +37,8 @@ interface IProps {
 
 interface IState {}
 
+const FITLER_LIMIT = 1000;
+
 const Rectangle = props => {
   const { w, h, t } = props;
   return (
@@ -113,7 +115,8 @@ class TransactionRecordScreen extends Component<IProps, IState> {
           toId: {
             eq: newUser.id
           }
-        }
+        },
+        limit: FITLER_LIMIT
       }),
       'data.listTransactions.items'
     );
@@ -124,7 +127,8 @@ class TransactionRecordScreen extends Component<IProps, IState> {
           fromId: {
             eq: newUser.id
           }
-        }
+        },
+        limit: FITLER_LIMIT
       }),
       'data.listTransactions.items'
     );

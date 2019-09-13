@@ -8,6 +8,7 @@ export const onCreateUser = `subscription OnCreateUser {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
@@ -21,6 +22,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
@@ -34,6 +36,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt

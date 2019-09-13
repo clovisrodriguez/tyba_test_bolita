@@ -8,6 +8,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
@@ -21,6 +22,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
@@ -34,6 +36,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     email
     id
     nickname
+    status
     transactions
     type
     updatedAt
