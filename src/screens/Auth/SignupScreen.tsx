@@ -130,46 +130,45 @@ class LoginScreen extends Component<IProps, IState> {
     }
   }
 
-  async signUp() {
-    this.setState({
-      loading: true
-    });
-    const { email, name, password, phone_number } = this.state;
-    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
-    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-
-    try {
-      await Auth.signUp({
-        username: phoneNumber,
-        password,
-        attributes: {
-          name,
-          email: mail
-        }
-      });
-  
-      const user: CreateUserInput = {
-              cmus: 0,
-              email: email,
-              id: phoneNumber,
-              nickname: name,
-              status: User_status.ACTIVE,
-              transactions: [],
-              type: User_type.REGULAR_USER
-            };
-      
-      await createUser(user);
-      updateUser(user);
-      this.setState({ loading: false });
-      this.props.navigation.navigate(ROUTES.ConfirmationScreen);
-    } catch(error) {
-      this.setState({
-        loading: false,
-        errorMessage: error.message,
-        snackIsVisible: true
-      })
-    }
-  }
+  signUp() { 
+    this.setState({ 
+      loading: true 
+    }); 
+    const { email, name, password, phone_number } = this.state; 
+    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, ""); 
+    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`; 
+    Auth.signUp({ 
+      username: phoneNumber, 
+      password: password, 
+      attributes: { 
+        name, 
+        email: mail 
+      } 
+    }) 
+      .then(() => { 
+        const user: CreateUserInput = { 
+          cmus: 0, 
+          email: email, 
+          id: phoneNumber, 
+          nickname: name, 
+          transactions: [], 
+          type: User_type.REGULAR_USER 
+        }; 
+        updateUser(user); 
+        this.setState({ loading: false }); 
+        this.props.navigation.navigate(ROUTES.ConfirmationScreen, { 
+          password 
+        }); 
+      }) 
+      .catch(err => { 
+        console.log('error sign!:', err); 
+        this.setState({ 
+          loading: false, 
+          errorMessage: err.message, 
+          snackIsVisible: true 
+        }); 
+      }); 
+  } 
 
   render() {
     const { props } = this;
@@ -349,7 +348,7 @@ const pageStyles = StyleSheet.create({
     padding: wp('5%')
   },
   logo: {
-    width: 104,
+    width: 112,
     height: 112,
     marginBottom: hp('10%')
   }

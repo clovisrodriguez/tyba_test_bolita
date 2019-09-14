@@ -13,6 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+import { createUser } from '../../client';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -51,31 +52,40 @@ class ConfirmationScreen extends Component<IProps, IState> {
     setTimeout(() => this.setState({disableConfirmation: false}), RESEND_CONFIRMATION_TIME);
   }
 
-  handlerOnFulfill(code) {
-    Keyboard.dismiss();
-    this.setState({ loading: true });
-
-    let { user, navigation } = this.props;
-    const password = navigation.getParam('password', 'no-password');
-
-    Auth.confirmSignUp(user.id, code)
-      .then(res => {
-        console.log(res);
-        Auth.signIn(user.id, password)
-          .then(() => {
-            console.log('sign succesfully');
-            this.props.navigation.navigate(ROUTES.Dashboard);
-          })
-          .catch(err => {
-            this.setState({ loading: false });
-            console.log('error sign!:', err);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({ loading: false, errorMessage: err.message });
-      });
-  }
+  handlerOnFulfill(code) { 
+    Keyboard.dismiss(); 
+    this.setState({ loading: true }); 
+ 
+    let { user, navigation } = this.props; 
+    const password = navigation.getParam('password', 'no-password'); 
+ 
+    Auth.confirmSignUp(user.id, code) 
+      .then(res => { 
+        console.log(res); 
+        Auth.signIn(user.id, password) 
+          .then(() => { 
+            console.log('sign succesfully'); 
+            createUser(user) 
+              .then(res => { 
+                this.setState({ loading: false }); 
+                console.log('User succesfully created:', res); 
+                this.props.navigation.navigate(ROUTES.Dashboard); 
+              }) 
+              .catch(err => { 
+                console.log('Something went wrong creating user :', err); 
+                this.setState({ loading: false }); 
+              }); 
+          }) 
+          .catch(err => { 
+            this.setState({ loading: false }); 
+            console.log('error sign!:', err); 
+          }); 
+      }) 
+      .catch(err => { 
+        console.log(err); 
+        this.setState({ loading: false, errorMessage: err.message }); 
+      }); 
+  } 
 
   render() {
     return (
@@ -130,7 +140,7 @@ const pageStyles = StyleSheet.create({
     padding: wp('5%')
   },
   logo: {
-    width: 104,
+    width: 112,
     height: 112,
     marginTop: hp('5%'),
     marginBottom: hp('7%')

@@ -220,7 +220,7 @@ const pageStyles = StyleSheet.create({
     padding: wp('5%')
   },
   logo: {
-    width: 104,
+    width: 112,
     height: 112,
     marginBottom: hp('10%')
   }
