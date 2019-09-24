@@ -15,6 +15,7 @@ import {
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import updateUser from '../../store/actions/storeUser';
+import { Rectangle } from '../../components/Rectangle';
 import { Auth, Analytics } from 'aws-amplify';
 
 interface IProps {
@@ -25,25 +26,6 @@ interface IProps {
 }
 
 interface IState {}
-
-const Rectangle = props => {
-  const { w, h, t } = props;
-  return (
-    <LinearGradient
-      colors={['rgba(164,220,34,1)', 'rgba(164,220,34,0)']}
-      style={{
-        position: 'absolute',
-        width: w,
-        height: h * 1.5,
-        zIndex: 0,
-        top: t,
-        right: 0,
-        borderRadius: 20,
-        transform: [{ rotate: '180deg' }]
-      }}
-    />
-  );
-};
 
 class ProfileScreen extends Component<IProps, IState> {
   constructor(props) {
@@ -62,7 +44,7 @@ class ProfileScreen extends Component<IProps, IState> {
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />

@@ -19,6 +19,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+import { Rectangle } from '../components/Rectangle';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -27,25 +28,6 @@ interface IProps {
 }
 
 interface IState {}
-
-const Rectangle = props => {
-  const { w, h, t } = props;
-  return (
-    <LinearGradient
-      colors={['rgba(164,220,34,1)', 'rgba(164,220,34,0)']}
-      style={{
-        position: 'absolute',
-        width: w,
-        height: h,
-        zIndex: 0,
-        top: t,
-        right: 0,
-        borderRadius: 20,
-        transform: [{ rotate: '-45deg' }]
-      }}
-    />
-  );
-};
 
 class Dashboard extends Component<IProps, IState> {
   state = {};
@@ -85,7 +67,7 @@ class Dashboard extends Component<IProps, IState> {
         style={styles.background}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />

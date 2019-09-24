@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, View, Text, Keyboard } from 'react-native';
+import { StyleSheet, Image, View, Text, Keyboard, Linking } from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../../theme/index';
@@ -125,6 +125,14 @@ class ConfirmationScreen extends Component<IProps, IState> {
           title='ENVIAR NUEVAMENTE'
           titleStyle={{ color: theme.colors.secondary }}
           onPress={() => this.resendConfirmationCode}
+        />
+        <Button
+          title='¿Necesitas ayuda para verificar tu número?'
+          titleStyle={styles.link}
+          buttonStyle={styles.simpleButtonWhite}
+          onPress={() => {
+            Linking.openURL('https://wa.me/573192955855')
+          }}
         />
       </View>
     );

@@ -20,6 +20,7 @@ import { Button, Input } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMobile } from '@fortawesome/free-solid-svg-icons';
 import { formatPhoneNumber } from '../../validators/format';
+import { Rectangle } from '../../components/Rectangle';
 import {
   getUser,
   createTransaction,
@@ -45,25 +46,6 @@ interface IProps {
 }
 
 interface IState {}
-
-const Rectangle = props => {
-  const { w, h, t } = props;
-  return (
-    <LinearGradient
-      colors={['rgba(164,220,34,1)', 'rgba(164,220,34,0)']}
-      style={{
-        position: 'absolute',
-        width: w,
-        height: h,
-        zIndex: 0,
-        top: t,
-        right: 0,
-        borderRadius: 20,
-        transform: [{ rotate: '270deg' }]
-      }}
-    />
-  );
-};
 
 const PHONE_NUMBER = 'phone_number';
 const CMUS = 'cmus';
@@ -293,7 +275,7 @@ class TransactionsScreen extends Component<IProps, IState> {
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />

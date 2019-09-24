@@ -104,7 +104,7 @@ class QRComponent extends Component<IProps, IState> {
               fontSize: hp('2%'),
               marginBottom: hp('4%')
             }}>
-            ¡Utiliza tu QR para que te pasen más CMUs!
+            ¡Utiliza tu QR para que te pasen más Cashies!
           </Text>
           <QRCode value={QRdata} size={wp('80%')} />
           <Text
@@ -116,7 +116,7 @@ class QRComponent extends Component<IProps, IState> {
             onPress={() =>
               this.props.navigation.navigate(ROUTES.TransactionsScreen)
             }>
-            Si deseas enviar CMUs al número celular de amigo presiona aquí >>
+            Si deseas enviar Cashies al número celular de amigo presiona aquí >>
           </Text>
         </Animated.View>
       </View>
@@ -158,7 +158,7 @@ class QRScreen extends Component<IProps, IState> {
       return (
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />
@@ -177,7 +177,7 @@ class QRScreen extends Component<IProps, IState> {
         }}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />

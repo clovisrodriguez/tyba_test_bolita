@@ -27,6 +27,7 @@ import {
 import { getTransactions, getUser } from '../../client/index';
 import updateTransactions from '../../store/actions/storeTransactions';
 import updateUser from '../../store/actions/storeUser';
+import { Rectangle } from '../../components/Rectangle';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -38,25 +39,6 @@ interface IProps {
 interface IState {}
 
 const FITLER_LIMIT = 1000;
-
-const Rectangle = props => {
-  const { w, h, t } = props;
-  return (
-    <LinearGradient
-      colors={['rgba(164,220,34,1)', 'rgba(164,220,34,0)']}
-      style={{
-        position: 'absolute',
-        width: w,
-        height: h * 1.5,
-        zIndex: 0,
-        top: t,
-        right: 0,
-        borderRadius: 20,
-        transform: [{ rotate: '120deg' }]
-      }}
-    />
-  );
-};
 
 class TransactionRecordScreen extends Component<IProps, IState> {
   constructor(props) {
@@ -93,7 +75,7 @@ class TransactionRecordScreen extends Component<IProps, IState> {
       <ListItem
         containerStyle={toUser ? styles.greenCard : styles.blueCard}
         key={item}
-        title={`${item.cmus.toString()} CMUs`}
+        title={`${item.cmus.toString()} Cashies`}
         titleStyle={{ color, fontWeight: 'bold' }}
         rightSubtitle={`${date.getFullYear()}-${date.getMonth() +
           1}-${date.getDate()}`}
@@ -157,7 +139,7 @@ class TransactionRecordScreen extends Component<IProps, IState> {
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />

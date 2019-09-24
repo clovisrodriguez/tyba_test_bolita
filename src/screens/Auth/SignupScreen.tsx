@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Image, KeyboardAvoidingView } from 'react-native';
 import { ROUTES } from '../../routes';
 import { NavigationScreenProp } from 'react-navigation';
-import { Button, Input } from 'react-native-elements';
+import { Button, Input, Text, colors } from 'react-native-elements';
 import { styles, theme } from '../../theme/index';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
@@ -29,8 +29,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
-import { createUser } from '../../client';
-import { any } from 'async';
+import * as WebBrowser from 'expo-web-browser';
 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
@@ -130,45 +129,45 @@ class LoginScreen extends Component<IProps, IState> {
     }
   }
 
-  signUp() { 
-    this.setState({ 
-      loading: true 
-    }); 
-    const { email, name, password, phone_number } = this.state; 
-    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, ""); 
-    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`; 
-    Auth.signUp({ 
-      username: phoneNumber, 
-      password: password, 
-      attributes: { 
-        name, 
-        email: mail 
-      } 
-    }) 
-      .then(() => { 
-        const user: CreateUserInput = { 
-          cmus: 0, 
-          email: email, 
-          id: phoneNumber, 
-          nickname: name, 
-          transactions: [], 
-          type: User_type.REGULAR_USER 
-        }; 
-        updateUser(user); 
-        this.setState({ loading: false }); 
-        this.props.navigation.navigate(ROUTES.ConfirmationScreen, { 
-          password 
-        }); 
-      }) 
-      .catch(err => { 
-        console.log('error sign!:', err); 
-        this.setState({ 
-          loading: false, 
-          errorMessage: err.message, 
-          snackIsVisible: true 
-        }); 
-      }); 
-  } 
+  signUp() {
+    this.setState({
+      loading: true
+    });
+    const { email, name, password, phone_number } = this.state;
+    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
+    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
+    Auth.signUp({
+      username: phoneNumber,
+      password: password,
+      attributes: {
+        name,
+        email: mail
+      }
+    })
+      .then(() => {
+        const user: CreateUserInput = {
+          cmus: 0,
+          email: email,
+          id: phoneNumber,
+          nickname: name,
+          transactions: [],
+          type: User_type.REGULAR_USER
+        };
+        updateUser(user);
+        this.setState({ loading: false });
+        this.props.navigation.navigate(ROUTES.ConfirmationScreen, {
+          password
+        });
+      })
+      .catch(err => {
+        console.log('error sign!:', err);
+        this.setState({
+          loading: false,
+          errorMessage: err.message,
+          snackIsVisible: true
+        });
+      });
+  }
 
   render() {
     const { props } = this;
@@ -334,6 +333,12 @@ class LoginScreen extends Component<IProps, IState> {
             navigation.navigate(ROUTES.HomeScreen);
           }}
         />
+        <Text style={{ color: theme.colors.linkGrey }}>Al inscribirte aceptas nuestros</Text>
+        <Button
+          title='Terminos y condiciones'
+          titleStyle={styles.link}
+          buttonStyle={styles.simpleButtonWhite}
+          onPress={() => WebBrowser.openBrowserAsync('https://www.cashmeup.co/terminos_y_condiciones')} />
       </KeyboardAvoidingView>
     );
   }

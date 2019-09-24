@@ -8,12 +8,15 @@ export const theme = {
   colors: {
     darkBackground: ['#0F253C', '#010305'],
     darkLabel: '#121212',
-    disabled: '#3A5403',
+    disabled: '#5f4621',
     disabledGrey: '#d9d9d9',
     grey: '#adadad',
-    primary: '#88B91E',
+    linkGrey: '#5e5e5e',
+    primary: '#dc9425',
     secondary: '#0F253C',
     softBlue: '#1F3A54',
+    softLight: 'rgba(252, 214, 42, 0.2)',
+    primaryTransparent: 'rgba(220, 148, 37, 0)',
     transparent: 'rgba(20, 20, 20, 0)',
     white: '#FFF',
     whiteBackground: '#EAEAEA'
@@ -96,6 +99,10 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: wp('1%'),
     marginBottom: wp('1%')
+  },
+  link: {
+    color: theme.colors.linkGrey,
+    textDecorationLine: 'underline'
   },
   lottie: {
     width: 100,

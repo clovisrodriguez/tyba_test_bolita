@@ -10,6 +10,7 @@ import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
 import { Button } from 'react-native-elements';
 import { formatPhoneNumber } from '../../validators/format';
+import { Rectangle } from '../../components/Rectangle';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -22,25 +23,6 @@ interface IProps {
 }
 
 interface IState {}
-
-const Rectangle = props => {
-  const { w, h, t } = props;
-  return (
-    <LinearGradient
-      colors={['rgba(164,220,34,1)', 'rgba(164,220,34,0)']}
-      style={{
-        position: 'absolute',
-        width: w,
-        height: h * 1.5,
-        zIndex: 0,
-        top: t,
-        right: 0,
-        borderRadius: 20,
-        transform: [{ rotate: '120deg' }]
-      }}
-    />
-  );
-};
 
 class ConfirmationTransactionScreen extends Component<IProps, IState> {
   state = {
@@ -61,7 +43,7 @@ class ConfirmationTransactionScreen extends Component<IProps, IState> {
       <LinearGradient colors={theme.colors.darkBackground} style={{ flex: 1 }}>
         <AnimatedLoader
           visible={loading}
-          overlayColor='rgba(164,220,34,0.75)'
+          overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />
