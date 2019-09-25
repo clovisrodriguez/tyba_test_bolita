@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "com.qatro20company.cashmeup",
-      "versionCode": 4
+      "versionCode": 5
     },
     "description": "First test environment of Cash Me Up, please anything you notices that is something it should fix you can write to me to clovis.rodriguez@cashmeup.co"
   }
