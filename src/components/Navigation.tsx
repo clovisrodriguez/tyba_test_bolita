@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { theme } from '../theme/index';
-import { getUser, onUpdateTransactionSubscription } from '../client/index';
+import { getUser } from '../client/index';
 import { faQrcode, faUser, faPaperPlane, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import updateUser from '../store/actions/storeUser';
 import { connect } from 'react-redux';
@@ -23,33 +23,10 @@ interface IProps {
 
 class NavigationComponent extends Component<IProps, any> {
   render() {
-    const { user, navigation } = this.props;
-
-    onUpdateTransactionSubscription.subscribe({
-      next: transaction => {
-        const userId = transaction.value.data.onUpdateTransaction.toId;
-        if (Object.keys(user).length > 0) {
-          userId === user.id &&
-            getUser(user.id).then((userTable: any) => {
-              updateUser(userTable.data.getUser);
-            });
-        }
-      }
-    });
+    const { navigation } = this.props;
 
     return (
       <View style={navigationStyles.container}>
-        <Button
-          buttonStyle={navigationStyles.buttonStyle}
-          onPress={() => navigation.navigate(ROUTES.TransactionsScreen)}
-          icon={
-            <FontAwesomeIcon
-              icon={faPaperPlane}
-              size={hp('4%')}
-              color={theme.colors.secondary}
-            />
-          }
-        />
         <Button
           buttonStyle={navigationStyles.buttonStyle}
           onPress={() => navigation.navigate(ROUTES.Dashboard)}
@@ -69,19 +46,6 @@ class NavigationComponent extends Component<IProps, any> {
           icon={
             <FontAwesomeIcon
               icon={faUser}
-              size={hp('4%')}
-              color={theme.colors.secondary}
-            />
-          }
-        />
-        <Button
-          buttonStyle={navigationStyles.buttonStyle}
-          onPress={() =>
-            Linking.openURL('https://wa.me/573192955855')
-          }
-          icon={
-            <FontAwesomeIcon
-              icon={faQuestion}
               size={hp('4%')}
               color={theme.colors.secondary}
             />

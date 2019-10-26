@@ -3,91 +3,73 @@
 
 export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
 export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
 export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
-export const onCreateTransaction = `subscription OnCreateTransaction {
-  onCreateTransaction {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const onCreateTransactions = `subscription OnCreateTransactions {
+  onCreateTransactions {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;
-export const onUpdateTransaction = `subscription OnUpdateTransaction {
-  onUpdateTransaction {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const onUpdateTransactions = `subscription OnUpdateTransactions {
+  onUpdateTransactions {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;
-export const onDeleteTransaction = `subscription OnDeleteTransaction {
-  onDeleteTransaction {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const onDeleteTransactions = `subscription OnDeleteTransactions {
+  onDeleteTransactions {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;

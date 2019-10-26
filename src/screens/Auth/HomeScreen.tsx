@@ -29,19 +29,19 @@ class HomeScreen extends Component<IProps, IState> {
     this._userIsAuth = this._userIsAuth.bind(this);
     this.state = {
       isReady: false
-    }
+    };
   }
-  
+
   _userIsAuth = async () => {
     try {
       await Auth.currentSession();
-      this.setState({isReady: true})
-      this.props.navigation.navigate(ROUTES.Dashboard)
-      return Promise.resolve()
-    } catch(error) {
-      return Promise.reject(error)
+      this.setState({ isReady: true });
+      this.props.navigation.navigate(ROUTES.Dashboard);
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
     } finally {
-      this.setState({isReady: true})
+      this.setState({ isReady: true });
     }
   };
 
@@ -51,14 +51,17 @@ class HomeScreen extends Component<IProps, IState> {
         <AppLoading
           startAsync={this._userIsAuth}
           onFinish={() => this.setState({ isReady: true })}
-          onError={(error) => console.log(error)}
+          onError={error => console.log(error)}
         />
-      )
+      );
     }
     return (
-      <ImageBackground source={require('../../../assets/background.jpg')} style={pageStyles.background}>
-        <View style={pageStyles.container}>
-          <Image source={require('../../../assets/logo-with-text.png')} style={pageStyles.logo} />
+      <View style={pageStyles.container}>
+        <Image
+          source={require('../../../assets/logo_transparent.png')}
+          style={pageStyles.logo}
+        />
+        <View style={pageStyles.whiteContainer}>
           <Button
             buttonStyle={styles.greenButton}
             title='INGRESAR'
@@ -76,7 +79,7 @@ class HomeScreen extends Component<IProps, IState> {
             }}
           />
         </View>
-      </ImageBackground>
+      </View>
     );
   }
 }
@@ -85,13 +88,21 @@ const pageStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: theme.colors.primary,
     justifyContent: 'center',
-    padding: 20
+    padding: hp('4%'),
+    paddingBottom: 0
   },
   logo: {
     width: 180,
     height: 215,
     marginBottom: hp('20%')
+  },
+  whiteContainer: {
+    backgroundColor: theme.colors.whiteBackground,
+    borderRadius: hp('2%'),
+    height: hp('50%'),
+    padding: hp('2%')
   },
   background: {
     height: '100%',

@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, StyleProp, ViewStyle, Text, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  Text,
+  View
+} from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 import { styles, theme } from '../theme/index';
 import { getUser } from '../client/index';
@@ -14,113 +21,97 @@ import AnimatedLoader from 'react-native-animated-loader';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { BlurView } from 'expo-blur';
-import * as WebBrowser from 'expo-web-browser';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
 import { Rectangle } from '../components/Rectangle';
 
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import axios from 'axios';
+ 
 interface IProps {
   navigation: NavigationScreenProp<any, any>;
   buttonStyle?: StyleProp<ViewStyle>;
   user: CreateUserInput;
 }
 
-interface IState {}
+interface IState {
+  location: any;
+  errorMessage: any;
+  places: Array<any>;
+}
 
+const APP_ID =
+  'twRzsFITSsHgG3HRFYEg'; /* IN A REAL PROJECT I WILL NEVER LEAVE A KEY HERE */
+const APP_CODE = 'D6cl63ROyVXtQDlSly0f6g';
 class Dashboard extends Component<IProps, IState> {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: null,
+      errorMessage: null,
+      places: null
+    };
+  }
 
   componentDidMount() {
-    Analytics.record({ name: 'visit dashboard' });
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage:
+          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+      });
+    } else {
+      this._getLocationAsync();
+    }
+
+  }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied'
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+  };
+
+  async componentDidUpdate() {
+    const { location } = this.state;
+    const { altitude, longitude, latitude } = location.coords
+    if(location) {
+      //  Bogotá Coordinates return an empty array I didn't count that this API doesnt have any results for the region :/
+      const res = await axios.get(`https://places.cit.api.here.com/places/v1/discover/here?app_id=${APP_ID}&app_code=${APP_CODE}&at=${latitude},${longitude}&pretty`);
+      this.setState({places: res.data.result.items});
+    }
   }
 
   render() {
-    const { user, navigation } = this.props;
-    const validUser = user ? Object.keys(user).length > 0 : false;
-    let loading = false;
-
-    if (!validUser) {
-      loading = true;
-      let userName;
-      Auth.currentAuthenticatedUser()
-        .then(authUser => {
-          userName = authUser.signInUserSession.idToken.payload.phone_number;
-          getUser(userName)
-            .then((userTable: any) => {
-              updateUser(userTable.data.getUser);
-              loading = false;
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
+    let text = 'Waiting..';
+    if (this.state.errorMessage) {
+      text = this.state.errorMessage;
+    } else if (this.state.location) {
+      text = JSON.stringify(this.state.location);
     }
-
-    let url = `http://webcheckout-development-develop.s3-website.us-east-2.amazonaws.com/?id=${
-      user.id
-    }`;
 
     return (
       <LinearGradient
         colors={theme.colors.darkBackground}
-        style={styles.background}>
+        style={styles.background}
+      >
         <AnimatedLoader
-          visible={loading}
+          visible={false}
           overlayColor={theme.colors.softLight}
           animationStyle={styles.lottie}
           speed={1}
         />
         <View style={styles.innerPage}>
-          <BlurView style={pageStyles.balance} tint='default' intesity={40}>
-            <Text style={pageStyles.cmu_number}>{user.cmus}</Text>
-            <Text
-              style={{
-                color: theme.colors.white,
-                textAlign: 'center',
-                fontSize: wp('3%'),
-                paddingTop: wp('1%')
-              }}>
-              ¡Hola {user.nickname}! Este es tu saldo disponible
-            </Text>
-          </BlurView>
-
-          {/* FOR NOW ALL BUY CMUS ARE GOING TO BE MANUAL */
-          /* <Button
-            title='COMPRAR CMUS'
-            buttonStyle={styles.greenButton}
-            type='outline'
-            titleStyle={{ color: theme.colors.secondary }}
-            onPress={() => {
-              WebBrowser.openBrowserAsync(url);
-            }}
-          /> */}
-          <Button
-            title='PAGAR / ENVIAR DINERO'
-            buttonStyle={styles.greenButtonOutline}
-            type='outline'
-            titleStyle={{ color: theme.colors.primary }}
-            onPress={() => {
-              Analytics.record({ name: 'Send Money Dashboard Button' });
-              navigation.navigate(ROUTES.TransactionsScreen);
-            }}
-          />
-          <Button
-            buttonStyle={pageStyles.circleButton}
-            onPress={() => {
-              Analytics.record({
-                name: 'QR Dashboard Button'
-              });
-              navigation.navigate(ROUTES.QRScreen);
-            }}
-            icon={
-              <FontAwesomeIcon
-                icon={faQrcode}
-                size={hp('5%')}
-                color={theme.colors.secondary}
-              />
-            }
-          />
+          <Text>{text}</Text>
         </View>
         <Rectangle w={wp('29%')} h={hp('32%')} t={hp('26%')} />
         <Rectangle w={wp('32%')} h={hp('34%')} t={hp('6%')} />
@@ -148,12 +139,6 @@ const pageStyles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderRadius: hp('5%'),
     marginTop: hp('3%')
-  },
-  cmu_number: {
-    color: theme.colors.white,
-    fontSize: hp('5%'),
-    fontWeight: '600',
-    textAlign: 'center'
   }
 });
 

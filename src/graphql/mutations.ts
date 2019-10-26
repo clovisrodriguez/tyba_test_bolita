@@ -3,91 +3,73 @@
 
 export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
 export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
 export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
-export const createTransaction = `mutation CreateTransaction($input: CreateTransactionInput!) {
-  createTransaction(input: $input) {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const createTransactions = `mutation CreateTransactions($input: CreateTransactionsInput!) {
+  createTransactions(input: $input) {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;
-export const updateTransaction = `mutation UpdateTransaction($input: UpdateTransactionInput!) {
-  updateTransaction(input: $input) {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const updateTransactions = `mutation UpdateTransactions($input: UpdateTransactionsInput!) {
+  updateTransactions(input: $input) {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;
-export const deleteTransaction = `mutation DeleteTransaction($input: DeleteTransactionInput!) {
-  deleteTransaction(input: $input) {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const deleteTransactions = `mutation DeleteTransactions($input: DeleteTransactionsInput!) {
+  deleteTransactions(input: $input) {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;

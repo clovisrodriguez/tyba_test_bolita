@@ -5,17 +5,10 @@ import * as queries from '../graphql/queries';
 import * as subscriptions from '../graphql/subscriptions';
 import {
   CreateUserInput,
-  CreateTransactionInput,
-  UpdateTransactionInput,
   UpdateUserInput,
   ListUsersQueryVariables,
-  ListTransactionsQueryVariables
 } from '../API';
 
-export const createTransaction = async (transaction: CreateTransactionInput) =>
-  await API.graphql(
-    graphqlOperation(mutations.createTransaction, { input: transaction })
-  );
 
 export const createUser = async (user: CreateUserInput) =>
   await API.graphql(graphqlOperation(mutations.createUser, { input: user }));
@@ -23,15 +16,9 @@ export const createUser = async (user: CreateUserInput) =>
 export const getAllUser = async (variables: ListUsersQueryVariables) =>
   await API.graphql(graphqlOperation(queries.listUsers, variables));
 
-export const getTransactions = async (variables: ListTransactionsQueryVariables) => 
-  await API.graphql(graphqlOperation(queries.listTransactions, variables))
-
 export const getUser = async (id: String) =>
   await API.graphql(graphqlOperation(queries.getUser, { id }));
 
-export const onUpdateTransactionSubscription = API.graphql(
-  graphqlOperation(subscriptions.onUpdateTransaction)
-) as Observable<any>;
 
 export const onUpdateUserSuscription = async (user: UpdateUserInput) => {
   const updateUserListener = API.graphql(
@@ -49,13 +36,6 @@ export const onUpdateUserSuscription = async (user: UpdateUserInput) => {
     return newStateUser;
   }
 };
-
-export const updateTransaction = async (transaction: UpdateTransactionInput) =>
-  await API.graphql(
-    graphqlOperation(mutations.updateTransaction, {
-      input: transaction
-    })
-  );
 
 export const updateUserDB = async (user: UpdateUserInput) =>
   await API.graphql(graphqlOperation(mutations.updateUser, { input: user }));

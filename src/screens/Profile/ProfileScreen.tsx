@@ -5,7 +5,7 @@ import { styles, theme } from '../../theme/index';
 import { ROUTES } from '../../routes/index';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
-import { CreateUserInput, UpdateTransactionInput } from '../../API';
+import { CreateUserInput } from '../../API';
 import AnimatedLoader from 'react-native-animated-loader';
 import { BlurView } from 'expo-blur';
 import { Button } from 'react-native-elements';
@@ -22,7 +22,6 @@ interface IProps {
   navigation: NavigationScreenProp<any, any>;
   buttonStyle?: StyleProp<ViewStyle>;
   user: CreateUserInput;
-  transactions: Array<UpdateTransactionInput>;
 }
 
 interface IState {}
@@ -64,12 +63,6 @@ class ProfileScreen extends Component<IProps, IState> {
               padding: 20,
               alignItems: 'center'
             }}>
-            <Text style={styles.label}>Nombre parchado</Text>
-            <Text style={styles.answer}>{user.nickname}</Text>
-            <Text style={styles.label}>Número celular</Text>
-            <Text style={styles.answer}>{user.id}</Text>
-            <Text style={styles.label}>Correo</Text>
-            <Text style={styles.answer}>{user.email}</Text>
             <Button
               style={{ marginTop: hp('20%') }}
               buttonStyle={styles.greenButton}

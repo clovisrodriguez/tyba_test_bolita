@@ -12,7 +12,7 @@ export const theme = {
     disabledGrey: '#d9d9d9',
     grey: '#adadad',
     linkGrey: '#5e5e5e',
-    primary: '#dc9425',
+    primary: '#E0525D',
     secondary: '#0F253C',
     softBlue: '#1F3A54',
     softLight: 'rgba(252, 214, 42, 0.2)',

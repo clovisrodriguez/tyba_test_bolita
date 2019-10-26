@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Cash Me Up",
+    "name": "Bolita Con Patas",
     "slug": "react_native_client",
     "privacy": "public",
     "sdkVersion": "33.0.0",
@@ -17,14 +17,6 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["assets/*"],
-    "ios": {
-      "bundleIdentifier": "com.qatro20company.cashmeup",
-      "supportsTablet": false
-    },
-    "android": {
-      "package": "com.qatro20company.cashmeup",
-      "versionCode": 5
-    },
-    "description": "First test environment of Cash Me Up, please anything you notices that is something it should fix you can write to me to clovis.rodriguez@cashmeup.co"
+    "description": "Typa app test"
   }
 }

@@ -13,8 +13,7 @@ import { Button, Input } from 'react-native-elements';
 import { styles, theme } from '../../theme/index';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { formatPhoneNumber } from '../../validators/format';
-import { validatePhoneNumber } from '../../validators/auth';
-import { faMobile, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from 'aws-amplify';
 import AnimatedLoader from 'react-native-animated-loader';
 import Snackbar from 'react-native-snackbar-component';
@@ -30,15 +29,9 @@ interface IProps {
 interface IState {}
 
 const PASSAWORD = 'password';
-const PHONE_NUMBER = 'phone_number';
+const EMAIL = 'email';
 
-const SingInMode = ({
-  navigation,
-  isDisable,
-  setRecoveryMode,
-  signIn,
-  updateText
-}) => {
+const SingInMode = ({ navigation, isDisable, signIn, updateText }) => {
   return (
     <View style={styles.innerContainer}>
       <Input
@@ -74,12 +67,6 @@ const SingInMode = ({
         disabledTitleStyle={{ color: theme.colors.grey }}
       />
       <Button
-        title='¿Olvidaste tu clave?'
-        titleStyle={{ color: theme.colors.darkLabel }}
-        buttonStyle={styles.simpleButtonWhite}
-        onPress={setRecoveryMode}
-      />
-      <Button
         title='Volver'
         titleStyle={{ color: theme.colors.darkLabel }}
         buttonStyle={styles.simpleButtonWhite}
@@ -91,36 +78,9 @@ const SingInMode = ({
   );
 };
 
-const RecoveryMode = ({
-  isDisableRecovery,
-  recoverPassword,
-  setRecoveryMode
-}) => {
-  return (
-    <View style={styles.innerContainer}>
-      <Button
-        buttonStyle={styles.greenButton}
-        title='ENVIAR'
-        titleStyle={styles.whiteTitleButton}
-        onPress={recoverPassword}
-        disabled={isDisableRecovery}
-        disabledStyle={{ backgroundColor: theme.colors.disabledGrey }}
-        disabledTitleStyle={{ color: theme.colors.grey }}
-      />
-      <Button
-        title='Volver'
-        titleStyle={{ color: theme.colors.darkLabel }}
-        buttonStyle={styles.simpleButtonWhite}
-        onPress={setRecoveryMode}
-      />
-    </View>
-  );
-};
-
 class LoginScreen extends Component<IProps, IState> {
   constructor(props) {
     super(props);
-    this.recoverPassword = this.recoverPassword.bind(this);
     this.setRecoveryMode = this.setRecoveryMode.bind(this);
     this.signIn = this.signIn.bind(this);
     this.updateText = this.updateText.bind(this);
@@ -129,35 +89,20 @@ class LoginScreen extends Component<IProps, IState> {
   state = {
     errorMessage: '',
     isDisable: true,
-    isDisableRecovery: true,
     loading: false,
     password: null,
-    phone_number: null,
+    email: null,
     recovery_mode: false,
-    snackIsVisible: false
+    snackIsVisible: false,
+    valid_email: true
   };
 
   updateText(key, value) {
     const { state } = this;
-    const { phone_number } = state;
+    const { email, password } = state;
 
-    if (key === PHONE_NUMBER) {
-      value = formatPhoneNumber(value);
-    }
-
-    if (validatePhoneNumber(value) || validatePhoneNumber(phone_number)) {
-      this.setState({ isDisableRecovery: false });
-      if (value && key === PASSAWORD) {
-        this.setState({
-          isDisable: false
-        });
-      } else {
-        this.setState({
-          isDisable: true
-        });
-      }
-    } else {
-      this.setState({ isDisableRecovery: true });
+    if (email && password) {
+      this.setState({ isDisable: false });
     }
 
     this.setState({
@@ -175,9 +120,9 @@ class LoginScreen extends Component<IProps, IState> {
     this.setState({
       loading: true
     });
-    const { password, phone_number } = this.state;
-    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-    Auth.signIn(phoneNumber, password)
+    const { password, email } = this.state;
+    let mail = email.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
+    Auth.signIn(mail, password)
       .then(() => {
         this.setState({ loading: false });
         this.props.navigation.navigate(ROUTES.Dashboard);
@@ -192,56 +137,9 @@ class LoginScreen extends Component<IProps, IState> {
       });
   }
 
-  recoverPassword() {
-    const { props, state } = this;
-    const { navigation } = props;
-    const { phone_number } = state;
-    let phoneNumber = `+${phone_number.replace(/[^0-9.]+/g, '')}`;
-
-    Keyboard.dismiss();
-    this.setState({
-      loading: true
-    });
-
-    Auth.forgotPassword(phoneNumber)
-      .then(res => {
-        console.log(res);
-        this.setState({
-          loading: false
-        });
-        navigation.navigate(ROUTES.PasswordRecoveryScreen, { phoneNumber });
-      })
-      .catch(err => {
-        console.log(err);
-        const codeError = err.code === 'UserNotFoundException';
-        this.setState({
-          loading: false,
-          errorMessage: codeError
-            ? 'no encontramos ninguna cuenta con ese número'
-            : 'algo salió mal vuelve a intentar',
-          snackIsVisible: true
-        });
-      });
-  }
-
   render() {
-    const {
-      props,
-      recoverPassword,
-      setRecoveryMode,
-      signIn,
-      state,
-      updateText
-    } = this;
-    const {
-      errorMessage,
-      isDisable,
-      isDisableRecovery,
-      loading,
-      phone_number,
-      recovery_mode,
-      snackIsVisible
-    } = state;
+    const { props, signIn, state, updateText } = this;
+    const { errorMessage, isDisable, loading, snackIsVisible } = state;
     const { navigation } = props;
 
     return (
@@ -257,16 +155,18 @@ class LoginScreen extends Component<IProps, IState> {
           textMessage={errorMessage}
           onPressed={() => this.setState({ snackIsVisible: false })}
         />
-        <Image source={require('../../../assets/logo-white-shadow.png')} style={pageStyles.logo} />
-        {recovery_mode && (
-          <Text>Ingresa el número que esta asociado con tu cuenta</Text>
-        )}
+        <View style={pageStyles.upperContainer}>
+          <Image
+            source={require('../../../assets/logo_transparent.png')}
+            style={pageStyles.logo}
+          />
+        </View>
         <Input
-          textContentType='telephoneNumber'
-          keyboardType='phone-pad'
+          keyboardType='email-address'
+          textContentType='emailAddress'
           leftIcon={
             <FontAwesomeIcon
-              icon={faMobile}
+              icon={faEnvelope}
               size={20}
               color={theme.colors.primary}
             />
@@ -278,20 +178,14 @@ class LoginScreen extends Component<IProps, IState> {
             zIndex: 2
           }}
           inputStyle={styles.input}
-          value={phone_number}
-          placeholder='Ingresa tu celular'
+          placeholder='Ingresa tu correo'
           inputContainerStyle={{ borderBottomWidth: 0 }}
-          onChangeText={value => this.updateText(PHONE_NUMBER, value)}
+          onChangeText={value => this.updateText(EMAIL, value)}
+          errorMessage={
+            this.state.valid_email ? '' : 'Ingresa un correo valido'
+          }
         />
-        {!recovery_mode ? (
-          <SingInMode
-            {...{ navigation, isDisable, setRecoveryMode, signIn, updateText }}
-          />
-        ) : (
-          <RecoveryMode
-            {...{ isDisableRecovery, recoverPassword, setRecoveryMode }}
-          />
-        )}
+        <SingInMode {...{ navigation, isDisable, signIn, updateText }} />
       </KeyboardAvoidingView>
     );
   }
@@ -306,8 +200,17 @@ const pageStyles = StyleSheet.create({
     padding: wp('5%')
   },
   logo: {
-    width: 112,
-    height: 112,
+    width: 150,
+    height: 150,
+  },
+  upperContainer: {
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary,
+    height: hp('20%'),
+    width: hp('20%'),
+    borderRadius: hp('50%'),
     marginBottom: hp('10%')
   }
 });

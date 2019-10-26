@@ -3,15 +3,15 @@
 
 export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
-    cmus
-    createdAt
-    email
     id
-    nickname
-    status
-    transactions
-    type
-    updatedAt
+    location
+    transactions {
+      id
+      restaurant
+      cost
+      productName
+      Date
+    }
   }
 }
 `;
@@ -22,54 +22,42 @@ export const listUsers = `query ListUsers(
 ) {
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      cmus
-      createdAt
-      email
       id
-      nickname
-      status
-      transactions
-      type
-      updatedAt
+      location
+      transactions {
+        id
+        restaurant
+        cost
+        productName
+        Date
+      }
     }
     nextToken
   }
 }
 `;
-export const getTransaction = `query GetTransaction($id: ID!) {
-  getTransaction(id: $id) {
-    cmus
-    createdAt
-    fromId
-    fromNickName
+export const getTransactions = `query GetTransactions($id: ID!) {
+  getTransactions(id: $id) {
     id
-    tags
-    toId
-    toNickname
-    type
-    status
-    updatedAt
+    restaurant
+    cost
+    productName
+    Date
   }
 }
 `;
-export const listTransactions = `query ListTransactions(
-  $filter: ModelTransactionFilterInput
+export const listTransactionss = `query ListTransactionss(
+  $filter: ModelTransactionsFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listTransactionss(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      cmus
-      createdAt
-      fromId
-      fromNickName
       id
-      tags
-      toId
-      toNickname
-      type
-      status
-      updatedAt
+      restaurant
+      cost
+      productName
+      Date
     }
     nextToken
   }
