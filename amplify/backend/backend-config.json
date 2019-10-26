@@ -1,23 +1,26 @@
 {
 	"auth": {
-		"rncclient42ee0757": {
+		"bolita4f3a80ea": {
 			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
 		}
 	},
 	"api": {
-		"cmuforge": {
+		"bolitagraph": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
-				"securityType": "AMAZON_COGNITO_USER_POOLS"
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authbolita4f3a80ea"
+						}
+					}
+				}
 			}
-		}
-	},
-	"analytics": {
-		"rncanalytics": {
-			"service": "Pinpoint",
-			"providerPlugin": "awscloudformation"
 		}
 	}
 }

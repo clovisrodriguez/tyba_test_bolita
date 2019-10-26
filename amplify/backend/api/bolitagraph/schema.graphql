@@ -1,0 +1,13 @@
+type User @model {
+	id: ID!
+	location: String!
+	transactions: [Transactions]
+}
+
+type Transactions @model {
+	id: ID!
+	restaurant: String
+	cost: Float
+	productName: String
+	Date: AWSDate
+}

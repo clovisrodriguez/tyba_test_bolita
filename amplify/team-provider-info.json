@@ -1,18 +1,18 @@
 {
-    "dev": {
+    "develop": {
         "awscloudformation": {
-            "AuthRoleName": "rncclient-dev-20190814215354-authRole",
-            "UnauthRoleArn": "arn:aws:iam::036917629170:role/rncclient-dev-20190814215354-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::036917629170:role/rncclient-dev-20190814215354-authRole",
+            "AuthRoleName": "bolita-develop-20191026083552-authRole",
+            "UnauthRoleArn": "arn:aws:iam::036917629170:role/bolita-develop-20191026083552-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::036917629170:role/bolita-develop-20191026083552-authRole",
             "Region": "us-east-2",
-            "DeploymentBucketName": "rncclient-dev-20190814215354-deployment",
-            "UnauthRoleName": "rncclient-dev-20190814215354-unauthRole",
-            "StackName": "rncclient-dev-20190814215354",
-            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/rncclient-dev-20190814215354/f4613b80-bf07-11e9-b57a-069bf518e2a4"
+            "DeploymentBucketName": "bolita-develop-20191026083552-deployment",
+            "UnauthRoleName": "bolita-develop-20191026083552-unauthRole",
+            "StackName": "bolita-develop-20191026083552",
+            "StackId": "arn:aws:cloudformation:us-east-2:036917629170:stack/bolita-develop-20191026083552/90a45dd0-f7f5-11e9-8a85-06d9da1ade34"
         },
         "categories": {
             "auth": {
-                "reactnativeclienta50f8301": {}
+                "bolita4f3a80ea": {}
             }
         }
     }
